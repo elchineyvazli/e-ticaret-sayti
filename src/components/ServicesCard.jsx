@@ -1,15 +1,15 @@
-import '../css/Serv.css'
+import '../css/Services.css'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
-import { addToBasket } from '../slices/basketSlice';
+import { addToServiceBasket } from '../slices/basketSlice';
 
-function Serv({ id, name, price, quantity = 1, isDescShow = false, desc }) {
+function ServicesCard({ id, name, price, quantity = 1, isDescShow = false, desc }) {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
     return (
-        <div className='serv'>
+        <div className='services-card'>
             <h1>{name}</h1>
             <h4>{price}$</h4>
             {
@@ -22,11 +22,11 @@ function Serv({ id, name, price, quantity = 1, isDescShow = false, desc }) {
                         </>
                     ) :
                     (
-                        <button onClick={() => dispatch(addToBasket(id))}>Add to cart</button>
+                        <button onClick={() => dispatch(addToServiceBasket(id))}>Add to cart</button>
                     )
             }
         </div>
     )
 }
 
-export default Serv
+export default ServicesCard

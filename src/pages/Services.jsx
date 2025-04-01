@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
-import Serv from '../components/Serv'
-import '../css/Serv.css'
+import ServicesCard from '../components/ServicesCard'
+import '../css/Services.css'
 
 function Services() {
 
@@ -9,14 +9,15 @@ function Services() {
     return (
         <div className='services'>
             {
-                services && services.map((el) => (
-                    <Serv
+                services.length > 0 ? services.map((el) => (
+                    <ServicesCard
                         key={el.id}
                         id={el.id}
                         name={el.name}
                         price={el.price}
                     />
                 ))
+                : <h1></h1>
             }
         </div>
     )

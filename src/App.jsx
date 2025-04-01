@@ -1,14 +1,24 @@
 import { Route, Routes } from "react-router"
 import Navbar from "./components/Navbar"
+
 import Home from "./pages/Home"
 import About from "./pages/About"
 import Preferences from "./pages/Preferences"
+
 import Services from "./pages/Services"
-import NothingPage from "./Error/NothingPage"
+import ServicesDetail from "./pages/ServicesDetail"
+import ProductList from "./pages/ProductList"
+import ProductDetail from "./pages/ProductDetail"
+
 import Students from "./subPages/Students"
 import Staffs from "./subPages/Staffs"
-import ServicesDetail from "./pages/ServicesDetail"
+
+
+import NothingPage from "./Error/NothingPage"
+
 import BasketPage from "./pages/BasketPage"
+
+import Loading from "./components/Loading"
 
 function App() {
 
@@ -24,9 +34,12 @@ function App() {
         <Route path="/preferences" element={<Preferences />} />
         <Route path="/services" element={<Services />} />
         <Route path="/services-detail/:id" element={<ServicesDetail />} />
+        <Route path="/products" element={<ProductList />} />
+        <Route path="/products-detail/:id" element={<ProductDetail />} />
         <Route path="/basket" element={<BasketPage />} />
         <Route path="*" element={<NothingPage />} />
       </Routes>
+      <Loading />
     </>
   )
 }
