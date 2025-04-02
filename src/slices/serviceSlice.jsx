@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { useSelector } from 'react-redux'
 
 const initialState = {
     services: [
@@ -28,27 +27,24 @@ const initialState = {
             seller: "Anar"
         }
     ],
-    totaServiceslQuantity: 0
+    totalServiceQuantity: 0
 }
 
-const totalQuantity = useSelector(store => store.appSlice.totalQuantity)
 
-export const basketSlice = createSlice({
-    name: 'basketReducer',
+export const servicesSlice = createSlice({
+    name: 'serviceReducer',
     initialState,
     reducers: {
         addToServiceBasket: (state, action) => {
-            state.services.forEach(el => {
-                if (el.id == action.payload) {
-                    el.quantity += 1;
-                    state.totaServiceslQuantity += 1;
-                    totalQuantity += 1
-                }
-            });
+            const service = state.services.find(el => el.id === action.payload);
+            if (service) {
+                service.quantity += 1;
+                state.totalServiceQuantity += 1;
+            }
         },
     },
 })
 
-export const { addToServiceBasket } = basketSlice.actions
+export const { addToServiceBasket } = servicesSlice.actions
 
-export default basketSlice.reducer
+export default servicesSlice.reducer

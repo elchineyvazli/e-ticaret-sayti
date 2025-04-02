@@ -6,7 +6,7 @@ import '../css/ProductList.css'
 
 function ProductList() {
     const dispatch = useDispatch()
-    const products = useSelector(store => store.appSlicer.products)
+    const products = useSelector(store => store.productSlice.products)
 
     useEffect(() => {
         dispatch(getAllProducts())

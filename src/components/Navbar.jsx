@@ -2,11 +2,19 @@ import { Link } from 'react-router'
 import { SlBasket } from "react-icons/sl";
 import '../css/Navbar.css'
 import { useSelector } from 'react-redux';
+import { useEffect, useState } from 'react';
 
 
 function Navbar() {
-    const totalQuantity = useSelector(store => store.basketSlicer.totalQuantity)
-    const products = useSelector(store => store.appSlicer.products)
+    const totalServiceQuantity = useSelector(store => store.serviceSlice.totalServiceQuantity)
+    const totalProductQuantity = useSelector(store => store.productSlice.totalProductQuantity)
+
+    let [isShowBasket, setIsShowBasket] = useState(false)
+    let [totalQuantity, setTotalQuantity] = useState(0)
+
+    useEffect(() => {
+        setTotalQuantity(totalProductQuantity + totalServiceQuantity)
+    }, [totalServiceQuantity, totalProductQuantity])
 
     return (
         <nav>
@@ -17,13 +25,28 @@ function Navbar() {
                 <Link className='link' to="/about" >About</Link>
                 <Link className='link' to="/services" >Services</Link>
                 <Link className='link' to="/products" >Products</Link>
-                <Link className='link basket' to="/basket" >
-                    <div className="count-container">
-                        <SlBasket size={20} />
-                        <div className="count">{totalQuantity}</div>
-                    </div>
-                </Link>
-            </div>
+                <div className='total_basket' onMouseEnter={() => setIsShowBasket(true)} onMouseLeave={() => setIsShowBasket(false)} >
+                    <p id='basket_link'>Basket</p>
+                    {
+                        isShowBasket && (
+                            <div className='other_basket'>
+                                <div className="list_basket">
+                                    Total count
+                                    <div className="count">{totalQuantity}</div>
+                                </div>
+                                <Link className='link list_basket' to="/product_basket" >
+                                    Products
+                                    <div className="count">{totalProductQuantity}</div>
+                                </Link>
+                                <Link className='link list_basket' to="/service_basket" >
+                                    Services
+                                    <div className="count">{totalServiceQuantity}</div>
+                                </Link>
+                            </div>
+                        )
+                    }
+                </div>
+            </div >
         </nav >
     )
 }

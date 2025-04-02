@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom";
 import { useSelector } from 'react-redux'
-import ServicesCard from "../components/ServicesCard";
+import ServicesCard from "../components/ServiceCard";
 
 function ServicesDetail() {
     const params = useParams();
-    const services = useSelector(store => store.basketSlicer.services)
+    const services = useSelector(store => store.servicesSlicer.services)
 
     return (
         <div className="services-detail">

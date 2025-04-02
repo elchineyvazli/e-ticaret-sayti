@@ -1,6 +1,11 @@
 import React from 'react'
+import ServiceCard from '../components/ServiceCard'
+import { useSelector } from 'react-redux'
 
 function BasketServices() {
+
+    const services = useSelector(store => store.serviceSlice.services)
+    
     return (
         <div>
             {
@@ -8,7 +13,7 @@ function BasketServices() {
 
                     if (el.quantity != 0) {
                         return (
-                            <ServicesCard
+                            <ServiceCard
                                 key={el.id}
                                 id={el.id}
                                 name={el.name}

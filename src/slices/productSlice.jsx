@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
-import { useSelector } from 'react-redux';
 
 const initialState = {
     loading: false,
@@ -15,20 +14,17 @@ export const getAllProducts = createAsyncThunk("getAllProducts", async () => {
     return data
 });
 
-const totalQuantity = useSelector(store => store.appSlice.totalQuantity)
 
 export const appSlice = createSlice({
-    name: 'appReducer',
+    name: 'productReducer',
     initialState,
     reducers: {
         addToProductBasket: (state, action) => {
-            state.services.forEach(el => {
-                if (el.id == action.payload) {
-                    el.quantity += 1;
-                    state.totalProductQuantity += 1;
-                    totalQuantity += 1
-                }
-            });
+            const product = state.products.find(el => el.id === action.payload);
+            if (product) {
+                product.quantity += 1;
+                state.totalProductQuantity += 1;
+            }
         },
     },
     extraReducers: (builder) => {

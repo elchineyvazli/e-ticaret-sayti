@@ -1,9 +1,9 @@
 import '../css/Services.css'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
-import { addToServiceBasket } from '../slices/basketSlice';
+import { addToServiceBasket } from '../slices/serviceSlice';
 
-function ServicesCard({ id, name, price, quantity = 1, isDescShow = false, desc }) {
+function ServiceCard({ id, name, price, quantity = 1, isDescShow = false, desc }) {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -29,4 +29,4 @@ function ServicesCard({ id, name, price, quantity = 1, isDescShow = false, desc 
     )
 }
 
-export default ServicesCard
+export default ServiceCard

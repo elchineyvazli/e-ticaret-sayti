@@ -1,6 +1,7 @@
 import { useDispatch } from "react-redux"
 import "../css/ProductCard.css"
 import { useNavigate } from "react-router-dom"
+import { addToProductBasket } from "../slices/productSlice"
 
 function ProductCard({ id, title, price, description, category, image, isDescShow = false, quantity = 1 }) {
     const dispatch = useDispatch()

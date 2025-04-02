@@ -16,8 +16,6 @@ import Staffs from "./subPages/Staffs"
 
 import NothingPage from "./Error/NothingPage"
 
-import BasketPage from "./pages/BasketPage"
-
 import Loading from "./components/Loading"
 
 function App() {
@@ -36,7 +34,6 @@ function App() {
         <Route path="/services-detail/:id" element={<ServicesDetail />} />
         <Route path="/products" element={<ProductList />} />
         <Route path="/products-detail/:id" element={<ProductDetail />} />
-        <Route path="/basket" element={<BasketPage />} />
         <Route path="*" element={<NothingPage />} />
       </Routes>
       <Loading />

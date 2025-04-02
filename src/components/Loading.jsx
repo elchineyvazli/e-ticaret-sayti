@@ -3,7 +3,7 @@ import CircularProgress from '@mui/material/CircularProgress';
 import { useSelector } from 'react-redux';
 
 function Loading() {
-    const loading = useSelector(store => store.appSlicer.loading)
+    const loading = useSelector(store => store.appSlice.loading)
     return (
         <Backdrop
             sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })}

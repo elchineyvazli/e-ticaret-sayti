@@ -24,21 +24,46 @@ h4 {
     font-size: 20px;
 }
 
+.total_basket {
+    display: flex;
+    position: relative;
+}
+
+#basket_link {
+    cursor: pointer;
+}
+
 .count-container {
     position: relative;
 }
 
 .count {
-    width: 16px;
-    height: 16px;
-    border-radius: 50%;
+    width: 30%;
+    height: 90%;
+    border-radius: 2px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: black;
+    background-color: white;
     border: solid 1.5px white;
-    color: white;
+    color: black;
+}
+
+.other_basket {
+    width: 120px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border: solid 1px white;
     position: absolute;
-    right: -10px;
-    bottom: -8px;
+    bottom: -73px;
+    left: -72px;
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.product_basket,
+.service_basket {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
