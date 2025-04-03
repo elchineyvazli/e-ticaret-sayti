@@ -1,5 +1,4 @@
 import { Link } from 'react-router'
-import { SlBasket } from "react-icons/sl";
 import '../css/Navbar.css'
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
@@ -31,7 +30,7 @@ function Navbar() {
                         isShowBasket && (
                             <div className='other_basket'>
                                 <div className="list_basket">
-                                    Total count
+                                    Total
                                     <div className="count">{totalQuantity}</div>
                                 </div>
                                 <Link className='link list_basket' to="/product_basket" >

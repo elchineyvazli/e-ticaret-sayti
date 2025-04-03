@@ -16,13 +16,13 @@ function ServiceCard({ id, name, price, quantity = 1, isDescShow = false, desc }
                 isDescShow ?
                     (
                         <>
-                            <button onClick={() => navigate("/services-detail/" + id)}>Go to Detail</button>
-                            <p>quantity : {quantity}</p>
+                            <button onClick={() => navigate("/services-detail/" + id)}>Detala yönləndir</button>
+                            <p>{quantity} ədəd</p>
                             <p style={{ textAlign: "center" }}>{desc}</p>
                         </>
                     ) :
                     (
-                        <button onClick={() => dispatch(addToServiceBasket(id))}>Add to cart</button>
+                        <button onClick={() => dispatch(addToServiceBasket(id))}>Səbətə əlavə et</button>
                     )
             }
         </div>

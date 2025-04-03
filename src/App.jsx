@@ -6,13 +6,15 @@ import About from "./pages/About"
 import Preferences from "./pages/Preferences"
 
 import Services from "./pages/Services"
-import ServicesDetail from "./pages/ServicesDetail"
+import ServicesDetail from "./pages/ServiceDetail"
 import ProductList from "./pages/ProductList"
 import ProductDetail from "./pages/ProductDetail"
 
 import Students from "./subPages/Students"
 import Staffs from "./subPages/Staffs"
 
+import BasketProducts from './pages/BasketProducts'
+import BasketServices from './pages/BasketServices'
 
 import NothingPage from "./Error/NothingPage"
 
@@ -31,9 +33,13 @@ function App() {
         </Route>
         <Route path="/preferences" element={<Preferences />} />
         <Route path="/services" element={<Services />} />
-        <Route path="/services-detail/:id" element={<ServicesDetail />} />
+        <Route path="/service-detail/:id" element={<ServicesDetail />} />
         <Route path="/products" element={<ProductList />} />
-        <Route path="/products-detail/:id" element={<ProductDetail />} />
+        <Route path="/product-detail/:id" element={<ProductDetail />} />
+
+        <Route path="/service_basket" element={<BasketServices />} />
+        <Route path="/product_basket" element={<BasketProducts />} />
+
         <Route path="*" element={<NothingPage />} />
       </Routes>
       <Loading />

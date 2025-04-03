@@ -5,12 +5,12 @@ import "../css/ProductDetail.css"
 
 function ProductDetail() {
     const params = useParams();
-    const products = useSelector(store => store.appSlicer.products)
+    const products_in_basket = useSelector(store => store.productSlice.products_in_basket)
 
     return (
         <div className="product-detail">
             {
-                products && products.map(el => {
+                products_in_basket && products_in_basket.map(el => {
                     if (el.id == params.id) {
                         return (
                             <ProductCard
@@ -22,6 +22,8 @@ function ProductDetail() {
                                 category={el.category}
                                 image={el.image}
                                 isDescShow={true}
+                                isDetailShow={false}
+                                classCard="product_card_basket"
                             />
                         )
                     }

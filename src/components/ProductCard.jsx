@@ -3,25 +3,43 @@ import "../css/ProductCard.css"
 import { useNavigate } from "react-router-dom"
 import { addToProductBasket } from "../slices/productSlice"
 
-function ProductCard({ id, title, price, description, category, image, isDescShow = false, quantity = 1 }) {
+function ProductCard({
+    id,
+    title,
+    price,
+    description,
+    category,
+    image,
+    isDescShow = false,
+    quantity = 1,
+    isDetailShow = false,
+    classCard
+}) {
     const dispatch = useDispatch()
     const navigate = useNavigate()
+
     return (
-        <div className='product_card'>
+        <div className={classCard} >
             <img src={image} alt="image" />
-            <h2 className="title">{title}</h2>
+            <h2 className="title" style={{ textAlign: "center", height: "70px" }}>{title}</h2>
             {
                 isDescShow ?
                     (
                         <>
-                            <button onClick={() => navigate('/product-detail/' + id)}>Go to detail</button>
+                            {
+                                isDetailShow && (
+                                    <>
+                                        <button onClick={() => navigate('/product-detail/' + id)}>Detala yönləndir</button>
+                                        <p>{quantity} ədəd</p>
+                                    </>
+                                )
+                            }
                             <p className="description" style={{ textAlign: "center" }}>{description}</p>
                             <h3 className="price">{price}₼</h3>
-                            <p>quantity : {quantity}</p>
                         </>
                     ) :
                     (
-                        <button onClick={() => dispatch(addToProductBasket(id))}>Add to cart</button>
+                        <button onClick={() => dispatch(addToProductBasket(id))}>Səbətə əlavə et</button>
                     )
             }
         </div>

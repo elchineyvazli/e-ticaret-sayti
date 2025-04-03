@@ -24,6 +24,7 @@ function ProductList() {
                         description={prod.description}
                         category={prod.category}
                         price={prod.price}
+                        classCard="product_card"
                     />
                 ))
             }

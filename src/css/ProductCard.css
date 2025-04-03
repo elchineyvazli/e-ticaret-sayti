@@ -12,13 +12,14 @@
     gap: 10px;
 }
 
-img {
+.product_card img {
     width: 50%;
     height: 40%;
 }
 
-.description{
+.description {
     height: 100px;
     font-size: 15px;
     overflow: hidden;
 }
+

@@ -1,26 +1,33 @@
-import React from 'react'
 import ProductCard from '../components/ProductCard'
 import { useSelector } from 'react-redux'
+import '../css/BasketProducts.css'
 
 function BasketProducts() {
 
-    const products = useSelector(store => store.productSlice.products)
+    const products_in_basket = useSelector(store => store.productSlice.products_in_basket)
+    for (let i = 0; i < products_in_basket.length; i++) {
+    }
+
 
     return (
-        <div>
+        <div className='product_basket'>
             {
-                products > 0 ? products.map((el) => {
+                products_in_basket.length > 0 ? products_in_basket.map((el) => {
 
                     if (el.quantity != 0) {
                         return (
                             <ProductCard
                                 key={el.id}
                                 id={el.id}
-                                name={el.name}
+                                title={el.name}
                                 price={el.price}
-                                desc={el.description}
+                                description={el.description}
+                                category={el.category}
+                                image={el.image}
                                 isDescShow={true}
                                 quantity={el.quantity}
+                                isDetailShow={true}
+                                classCard='product_card'
                             />
                         )
                     } else {

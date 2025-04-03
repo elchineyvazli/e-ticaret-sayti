@@ -1,15 +1,15 @@
-import React from 'react'
 import ServiceCard from '../components/ServiceCard'
 import { useSelector } from 'react-redux'
+import '../css/BasketServices.css'
 
 function BasketServices() {
 
-    const services = useSelector(store => store.serviceSlice.services)
-    
+    const services_in_basket = useSelector(store => store.serviceSlice.services_in_basket)
+
     return (
-        <div>
+        <div className='services_basket'>
             {
-                services > 0 ? services.map((el) => {
+                services_in_basket > 0 ? services_in_basket.map((el) => {
 
                     if (el.quantity != 0) {
                         return (
@@ -18,9 +18,9 @@ function BasketServices() {
                                 id={el.id}
                                 name={el.name}
                                 price={el.price}
-                                desc={el.description}
-                                isDescShow={true}
                                 quantity={el.quantity}
+                                isDescShow={true}
+                                desc={el.description}
                             />
                         )
                     } else {
