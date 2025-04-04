@@ -30,6 +30,7 @@ nav {
     .total_basket {
         display: flex;
         position: relative;
+        align-items: center;
 
         #basket_link {
             cursor: pointer;
