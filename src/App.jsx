@@ -2,16 +2,11 @@ import { Route, Routes } from "react-router"
 import Navbar from "./components/Navbar"
 
 import Home from "./pages/Home"
-import About from "./pages/About"
 import Preferences from "./pages/Preferences"
 
 import Services from "./pages/Services"
 import ServicesDetail from "./pages/ServiceDetail"
-import ProductList from "./pages/ProductList"
 import ProductDetail from "./pages/ProductDetail"
-
-import Students from "./subPages/Students"
-import Staffs from "./subPages/Staffs"
 
 import BasketProducts from './pages/BasketProducts'
 import BasketServices from './pages/BasketServices'
@@ -25,23 +20,20 @@ function App() {
   return (
     <>
       <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />}>
-          <Route path="students" element={<Students />}></Route>
-          <Route path="staffs" element={<Staffs />}></Route>
-        </Route>
-        <Route path="/preferences" element={<Preferences />} />
-        <Route path="/services" element={<Services />} />
-        <Route path="/service-detail/:id" element={<ServicesDetail />} />
-        <Route path="/products" element={<ProductList />} />
-        <Route path="/product-detail/:id" element={<ProductDetail />} />
+      <main className="main">
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/preferences" element={<Preferences />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/service-detail/:id" element={<ServicesDetail />} />
+          <Route path="/product-detail/:id" element={<ProductDetail />} />
 
-        <Route path="/service_basket" element={<BasketServices />} />
-        <Route path="/product_basket" element={<BasketProducts />} />
+          <Route path="/service_basket" element={<BasketServices />} />
+          <Route path="/product_basket" element={<BasketProducts />} />
 
-        <Route path="*" element={<NothingPage />} />
-      </Routes>
+          <Route path="*" element={<NothingPage />} />
+        </Routes>
+      </main>
       <Loading />
     </>
   )

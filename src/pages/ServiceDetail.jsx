@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useSelector } from 'react-redux'
 import ServiceCard from "../components/ServiceCard";
-import '../css/ProductDetail.css'
+import '../styles/ProductDetail.scss'
 
 function ServiceDetail() {
     const params = useParams();

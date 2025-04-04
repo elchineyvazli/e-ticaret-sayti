@@ -1,6 +1,6 @@
 import { useSelector } from 'react-redux'
 import ServicesCard from '../components/ServiceCard'
-import '../css/Services.css'
+import '../styles/Services.scss'
 
 function Services() {
 

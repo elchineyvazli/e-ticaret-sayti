@@ -1,6 +1,6 @@
 import ProductCard from '../components/ProductCard'
 import { useSelector } from 'react-redux'
-import '../css/BasketProducts.css'
+import '../styles/BasketProducts.scss'
 
 function BasketProducts() {
 

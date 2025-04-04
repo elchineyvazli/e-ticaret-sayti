@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux"
-import "../css/ProductCard.css"
+import "../styles/ProductCard.scss"
 import { useNavigate } from "react-router-dom"
 import { addToProductBasket } from "../slices/productSlice"
 

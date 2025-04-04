@@ -1,7 +1,8 @@
 import { Link } from 'react-router'
-import '../css/Navbar.css'
+import '../styles/Navbar.scss'
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { PiBasketLight } from "react-icons/pi";
 
 
 function Navbar() {
@@ -17,33 +18,15 @@ function Navbar() {
 
     return (
         <nav>
-            <h4>Logo</h4>
+            <Link className='link_homepage' to="/" >TGA</Link>
             <div className="links">
-                <Link className='link' to="/" >Home</Link>
                 <Link className='link' to="/preferences" >Preferences</Link>
-                <Link className='link' to="/about" >About</Link>
                 <Link className='link' to="/services" >Services</Link>
                 <Link className='link' to="/products" >Products</Link>
                 <div className='total_basket' onMouseEnter={() => setIsShowBasket(true)} onMouseLeave={() => setIsShowBasket(false)} >
-                    <p id='basket_link'>Basket</p>
-                    {
-                        isShowBasket && (
-                            <div className='other_basket'>
-                                <div className="list_basket">
-                                    Total
-                                    <div className="count">{totalQuantity}</div>
-                                </div>
-                                <Link className='link list_basket' to="/product_basket" >
-                                    Products
-                                    <div className="count">{totalProductQuantity}</div>
-                                </Link>
-                                <Link className='link list_basket' to="/service_basket" >
-                                    Services
-                                    <div className="count">{totalServiceQuantity}</div>
-                                </Link>
-                            </div>
-                        )
-                    }
+                    {/* <PiBasketLight size={28} /> */}
+                    <Link to="/" style={{ fontSize: "20px", textDecoration: "none" }}>🛒</Link>
+                    <div className="count">{totalProductQuantity}</div>
                 </div>
             </div >
         </nav >

@@ -1,6 +1,6 @@
 import ServiceCard from '../components/ServiceCard'
 import { useSelector } from 'react-redux'
-import '../css/BasketServices.css'
+import '../styles/BasketServices.scss'
 
 function BasketServices() {
 

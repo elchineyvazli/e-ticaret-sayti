@@ -1,4 +1,4 @@
-import '../css/Services.css'
+import '../styles/Services.scss'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch } from 'react-redux';
 import { addToServiceBasket } from '../slices/serviceSlice';
