@@ -3,17 +3,17 @@ import { useSelector } from 'react-redux';
 import '../styles/Navbar.scss'
 
 function Navbar() {
-    const totalProductQuantity = useSelector(store => store.productSlice.totalProductQuantity)
+    const productQuantity = useSelector(store => store.productSlice.productQuantity)
 
     return (
         <nav>
             <Link className='link_homepage' to="/" >TGA</Link>
             <div className="links">
                 <Link className='link' to="/preferences" >Kateqoriyalar</Link>
-                <Link className='link' to="/products" >Products</Link>
+                <Link className='link' to="/products" >Məhsullar</Link>
                 <div className='total_basket' >
                     <Link to="/product_basket" style={{ fontSize: "20px", textDecoration: "none" }}>🛒</Link>
-                    <div className="count">{totalProductQuantity}</div>
+                    <div className="count">{productQuantity}</div>
                 </div>
             </div >
         </nav >

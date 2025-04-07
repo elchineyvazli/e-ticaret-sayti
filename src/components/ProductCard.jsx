@@ -1,8 +1,7 @@
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import "../styles/ProductCard.scss"
-import { useNavigate } from "react-router-dom"
-import { addToProductBasket } from "../slices/productSlice"
-import { useState } from "react"
+import { addToProductBasket, creaseQuantityProd, increaseQuantityProd } from "../slices/productSlice"
+import { useEffect, useState } from "react"
 
 function ProductCard({
     id,
@@ -11,69 +10,76 @@ function ProductCard({
     description,
     category,
     image,
-    isDescShow = false,
-    quantity = 1,
-    isDetailShow = false,
-    classCard
+    classCard,
+    quantity
 }) {
     const dispatch = useDispatch()
-    const navigate = useNavigate()
-    const [prodCount, setProdCount] = useState(0)
+    const products = useSelector(store => store.productSlice.products)
+
+    const increaseQuantity = () => {
+        if (prod.quantity < 10) {
+            quantity += 1;
+            dispatch(increaseQuantityProd(id))
+        }
+    }
+
+    const creaseQuantity = () => {
+        if (prod.quantity < 10) {
+            quantity += 1;
+            dispatch(creaseQuantityProd(id))
+        }
+    }
 
     return (
-        <>
-            {/* <div className={classCard} >
-                {
-                    isDescShow &&
-                    (
-                        <>
-                            {
-                                isDetailShow && (
-                                    <>
-                                        <button className="detail_button" onClick={() => navigate('/product-detail/' + id)}>Detala yönləndir</button>
-                                        <p></p>
-                                    </>
-                                )
-                            }
-                        </>
-                    )
-                }
-            </div> */}
-
-            <div class={classCard}>
-                <div class="header">
-                    <div class="back"></div>
+        <div className={classCard}>
+            <div className="header">
+                <div className="back"></div>
+            </div>
+            <div className="main">
+                <div className="left">
+                    <h1>category</h1>
+                    <h2>title</h2>
+                    <h3>₼{price}</h3>
+                    <img src={image} alt="image" />
                 </div>
-                <div class="main">
-                    <div class="left">
-                        <h1>category</h1>
-                        <h2>title</h2>
-                        <h3>₼{price}</h3>
-                        <img src={image} alt="image" />
-                    </div>
-                    <div class="right">
-                        <p>{description.slice(0, 100)}</p>
-                        <p>
-                            <span class="fa fa-star yellow"></span>
-                            <span class="fa fa-star yellow"></span>
-                            <span class="fa fa-star yellow"></span>
-                            <span class="fa fa-star yellow"></span>
-                            <span class="fa fa-star"></span>
-                        </p>
-                        <span>(4.67 - 172 reviews)</span>
-                        <p class="quantity">ƏDƏD<span class="fa fa-angle-left angle" onClick={() => setProdCount(prev => prev - 1)}></span><span id="qt">{prodCount}</span><span class="fa fa-angle-right angle" onClick={() => setProdCount(prev => prev + 1)}></span></p>
-                    </div>
-                </div>
-                <div class="footer">
-                    <div class="left">
-                        <p id="price">₼{price}</p>
-                    </div>
-                    <div class="right">
-                        <button onClick={() => dispatch(addToProductBasket(id))}>Səbətə əlavə et</button>
+                <div className="right">
+                    <p>{description.slice(0, 100)}</p>
+                    <p>
+                        <span className="fa fa-star yellow"></span>
+                        <span className="fa fa-star yellow"></span>
+                        <span className="fa fa-star yellow"></span>
+                        <span className="fa fa-star yellow"></span>
+                        <span className="fa fa-star"></span>
+                    </p>
+                    <span>(4.67 - 172 reviews)</span>
+                    <div className="quantity">ƏDƏD
+                        {
+                            (products[id - 1].quantity + 1) > 1 && <span className="fa fa-angle-left angle quantity-arrow1 quantity-arrow" onClick={creaseQuantity}></span>
+                        }
+                        <span id="qt" className="quantity-block"
+                            style={{ fontSize: products[id - 1].quantity < 9 ? "20px" : "16px" }}
+                        >
+                            {products[id - 1].quantity + 1}
+                        </span>
+                        {
+                            (products[id - 1].quantity + 1) < 10 && <span className="fa fa-angle-right angle quantity-arrow2 quantity-arrow" onClick={increaseQuantity}></span>
+                        }
                     </div>
                 </div>
             </div>
-        </>
+            <div className="footer">
+                <div className="left">
+                    <p id="price">₼
+                        {(price * (products[id - 1].quantity + 1)).toFixed(2)}
+                    </p>
+                </div>
+                <div className="right">
+                    <button className="addToProductBasket"
+                        onClick={() => dispatch(addToProductBasket([id, products[id - 1].quantity]))}
+                    >Səbətə əlavə et</button>
+                </div>
+            </div>
+        </div >
     )
 }
 
