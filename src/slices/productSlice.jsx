@@ -23,37 +23,41 @@ export const appSlice = createSlice({
     reducers: {
         addToProductBasket: (state, action) => {
             const productIndex = state.products.findIndex(el => el.id === action.payload[0]);
+
             if (productIndex !== -1) {
                 const updatedProduct = {
                     ...state.products[productIndex],
-                    quantity: (state.products[productIndex].quantity || 0) + 1
+                    quantity: (state.products[productIndex].quantity || 0) + action.payload[1]
                 };
-
-
-                state.products = [
-                    ...state.products.slice(0, productIndex),
-                    updatedProduct,
-                    ...state.products.slice(productIndex + 1)
-                ];
-                state.productQuantity += 1;
-
-                const basketIndex = state.products_in_basket.findIndex(
-                    item => item.id === action.payload[0]
-                );
-
-                if (basketIndex === -1) {
-                    state.products_in_basket = [...state.products_in_basket, updatedProduct];
-                } else {
-                    state.products_in_basket = state.products_in_basket.map(item =>
-                        item.id === action.payload[0] ? { ...item, quantity: item.quantity + 1 } : item // [{id:3, quantity: 1}, ]
-                    );
-                }
-
+                console.log(state.products[productIndex].quantity);
             }
+
+            console.log(action.payload);
+
+            //     state.products = [
+            //         ...state.products.slice(0, productIndex),
+            //         updatedProduct,
+            //         ...state.products.slice(productIndex + action.payload[1])
+            //     ];
+            //     state.productQuantity += 1;
+
+            //     const basketIndex = state.products_in_basket.findIndex(
+            //         item => item.id === action.payload[0]
+            //     );
+
+            //     if (basketIndex === -1) {
+            //         state.products_in_basket = [...state.products_in_basket, updatedProduct];
+            //     } else {
+            //         state.products_in_basket = state.products_in_basket.map(item =>
+            //             item.id === action.payload[0] ? { ...item, quantity: item.quantity + action.payload[1] } : item
+            //         );
+            //     }
+
+            // }
         },
         increaseQuantityProd: (state, action) => {
             state.products.forEach(prod => {
-                if (prod.id == action.payload && prod.quantity <= 10) {
+                if (prod.id == action.payload[0] && prod.quantity <= 10) {
                     prod.quantity += 1;
                 }
             })
@@ -61,7 +65,7 @@ export const appSlice = createSlice({
         },
         creaseQuantityProd: (state, action) => {
             state.products.forEach(prod => {
-                if (prod.id == action.payload && prod.quantity > 0) {
+                if (prod.id == action.payload[0] && prod.quantity > 0) {
                     prod.quantity -= 1;
                 }
             })

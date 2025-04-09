@@ -11,23 +11,27 @@ function ProductCard({
     category,
     image,
     classCard,
-    quantity
+    quantity = 1
 }) {
     const dispatch = useDispatch()
     const products = useSelector(store => store.productSlice.products)
 
-    const increaseQuantity = () => {
-        if (prod.quantity < 10) {
-            quantity += 1;
-            dispatch(increaseQuantityProd(id))
-        }
+    const products_copy = [...products]
+
+    useEffect(() => {
+        // console.log("products");
+        // console.log(products[id - 1].quantity);
+        // console.log("products_copy");
+        // console.log(products_copy[id - 1].quantity);
+    },)
+    console.log(products_copy);    
+
+    const increase_quantity = (id) => {
+        products_copy[id - 1].quantity += 1
     }
 
-    const creaseQuantity = () => {
-        if (prod.quantity < 10) {
-            quantity += 1;
-            dispatch(creaseQuantityProd(id))
-        }
+    const crease_quantity = (id) => {
+        products_copy[id - 1].quantity -= 1
     }
 
     return (
@@ -54,15 +58,15 @@ function ProductCard({
                     <span>(4.67 - 172 reviews)</span>
                     <div className="quantity">ƏDƏD
                         {
-                            (products[id - 1].quantity + 1) > 1 && <span className="fa fa-angle-left angle quantity-arrow1 quantity-arrow" onClick={creaseQuantity}></span>
+                            (products_copy[id - 1].quantity + 1) > 1 && <span className="fa fa-angle-left angle quantity-arrow1 quantity-arrow" onClick={() => crease_quantity(id)}></span>
                         }
                         <span id="qt" className="quantity-block"
-                            style={{ fontSize: products[id - 1].quantity < 9 ? "20px" : "16px" }}
+                            style={{ fontSize: products_copy[id - 1].quantity < 9 ? "20px" : "16px" }}
                         >
-                            {products[id - 1].quantity + 1}
+                            {products_copy[id - 1].quantity + 1}
                         </span>
                         {
-                            (products[id - 1].quantity + 1) < 10 && <span className="fa fa-angle-right angle quantity-arrow2 quantity-arrow" onClick={increaseQuantity}></span>
+                            (products_copy[id - 1].quantity + 1) < 10 && <span className="fa fa-angle-right angle quantity-arrow2 quantity-arrow" onClick={() => increase_quantity(id)}></span>
                         }
                     </div>
                 </div>
@@ -75,7 +79,7 @@ function ProductCard({
                 </div>
                 <div className="right">
                     <button className="addToProductBasket"
-                        onClick={() => dispatch(addToProductBasket([id, products[id - 1].quantity]))}
+                        onClick={() => dispatch(addToProductBasket([id, quantity]))}
                     >Səbətə əlavə et</button>
                 </div>
             </div>
