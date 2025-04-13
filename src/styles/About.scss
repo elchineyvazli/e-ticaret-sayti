@@ -1,0 +1,44 @@
+.about-container {
+    background-color: #f9f9f9;
+    padding: 60px 20px;
+    display: flex;
+    justify-content: center;
+}
+
+.about-card {
+    background-color: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+    padding: 40px;
+    display: flex;
+    gap: 30px;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.author-image {
+    width: 160px;
+    height: 160px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 3px solid #2d7a5f;
+}
+
+.about-text {
+    flex: 1;
+    min-width: 260px;
+}
+
+.about-title {
+    font-size: 2rem;
+    color: #2d7a5f;
+    margin-bottom: 16px;
+}
+
+.about-text p {
+    font-size: 1rem;
+    color: #444;
+    margin-bottom: 14px;
+    line-height: 1.6;
+}

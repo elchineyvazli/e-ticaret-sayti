@@ -6,16 +6,19 @@ const initialState = {
     productQuantity: 0,
     products_in_basket: [],
     total_price: 0,
-    target_prod_quantity: 0
 }
 
-const BASE_URL = "https://fakestoreapi.com"
+const BASE_URL = "http://localhost:8000"
 
 export const getAllProducts = createAsyncThunk("getAllProducts", async () => {
     const response = await fetch(`${BASE_URL}/products`)
     const data = await response.json()
     return data
 });
+
+const calculateTotalPrice = (products) =>
+    products.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
 
 export const appSlice = createSlice({
     name: 'productReducer',
@@ -27,48 +30,60 @@ export const appSlice = createSlice({
             if (productIndex !== -1) {
                 const updatedProduct = {
                     ...state.products[productIndex],
-                    quantity: (state.products[productIndex].quantity || 0) + action.payload[1]
+                    quantity: action.payload[1],
+                    total_quantity: (
+                        state.products[action.payload[0] - 1].total_quantity == 0 ?
+                            (
+                                state.products[action.payload[0] - 1].quantity
+                            ) :
+                            (
+                                state.products[action.payload[0] - 1].total_quantity + action.payload[1]
+                            )
+                    )
                 };
-                console.log(state.products[productIndex].quantity);
+
+
+                state.products = [
+                    ...state.products.slice(0, productIndex),
+                    updatedProduct,
+                    ...state.products.slice(productIndex + 1)
+                ];
+                state.productQuantity += action.payload[1];
+
+                const basketIndex = state.products_in_basket.findIndex(item => item.id === action.payload[0]);
+
+                if (basketIndex === -1) {
+                    state.products_in_basket = [...state.products_in_basket, updatedProduct];
+                } else {
+                    state.products_in_basket = state.products_in_basket.map(item => {
+                        return item.id === action.payload[0]
+                            ? { ...item, quantity: item.quantity + action.payload[1] }
+                            : item;
+                    });
+                }
+                state.total_price = calculateTotalPrice(state.products_in_basket);
+
             }
-
-            console.log(action.payload);
-
-            //     state.products = [
-            //         ...state.products.slice(0, productIndex),
-            //         updatedProduct,
-            //         ...state.products.slice(productIndex + action.payload[1])
-            //     ];
-            //     state.productQuantity += 1;
-
-            //     const basketIndex = state.products_in_basket.findIndex(
-            //         item => item.id === action.payload[0]
-            //     );
-
-            //     if (basketIndex === -1) {
-            //         state.products_in_basket = [...state.products_in_basket, updatedProduct];
-            //     } else {
-            //         state.products_in_basket = state.products_in_basket.map(item =>
-            //             item.id === action.payload[0] ? { ...item, quantity: item.quantity + action.payload[1] } : item
-            //         );
-            //     }
-
-            // }
         },
         increaseQuantityProd: (state, action) => {
             state.products.forEach(prod => {
-                if (prod.id == action.payload[0] && prod.quantity <= 10) {
+                if (
+                    prod.id == action.payload
+                    &&
+                    prod.quantity < 10
+                ) {
                     prod.quantity += 1;
                 }
             })
-
+            state.total_price = calculateTotalPrice(state.products_in_basket);
         },
         creaseQuantityProd: (state, action) => {
             state.products.forEach(prod => {
-                if (prod.id == action.payload[0] && prod.quantity > 0) {
+                if (prod.id == action.payload && prod.quantity > 1) {
                     prod.quantity -= 1;
                 }
             })
+            state.total_price = calculateTotalPrice(state.products_in_basket);
         }
     },
     extraReducers: (builder) => {
@@ -76,7 +91,7 @@ export const appSlice = createSlice({
             state.loading = false
             state.products = action.payload.map(product => ({
                 ...product,
-                quantity: 0
+                quantity: 1
             }))
         })
         builder.addCase(getAllProducts.pending, (state) => {

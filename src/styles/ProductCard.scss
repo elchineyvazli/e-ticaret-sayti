@@ -1,191 +1,112 @@
-$default-card-color: #EFF4FF;
-$chosen-card-color: #DAE4FF;
-
-@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css);
-
-//$senape: #bcbd31;
-$senape: #DAE4FF;
-$giallo: rgb(254, 203, 108);
-$cubicBounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
-
-
-a {
-    text-decoration: none;
-    color: #3399ff;
+.product-card {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    max-width: 300px;
+    transition: transform 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-#qt {
-    color: rgb(153, 153, 153);
+.product-card:hover {
+    transform: translateY(-5px);
 }
 
-p {
-    .fa[class~=angle] {
-        font-size: 1.3rem;
-        position: relative;
-        top: 0.15rem;
-        margin: 0 20px;
-        cursor: pointer;
-        color: rgb(216, 216, 216);
-        transition: all .5s;
-
-        &:hover {
-            color: blue;
-        }
-    }
+.product-image {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
 }
 
-.yellow {
-    color: $giallo;
+.product-content {
+    padding: 16px;
 }
 
-.product_card {
-    width: 48%;
-    height: 500px;
-    background: #f2f5fa;
-    position: relative;
-    box-shadow: rgba(99, 99, 99, 0.3) 0px 2px 8px 0px;
-
-    &.action {
-        animation: bounce 1s $cubicBounce infinite;
-    }
-
-    .header {
-        height: 40px;
-        position: relative;
-        padding: 20px;
-        // background-color: #232e3a;
-
-        .back {
-            position: relative;
-            width: 0px;
-            height: 0px;
-            border-top: 30px solid #e6edfc;
-            border-bottom: 30px solid transparent;
-            border-left: 30px solid #e6edfc;
-            border-right: 30px solid transparent;
-
-            &::before {
-                content: "";
-                position: absolute;
-                color: rgba(255, 255, 255, 0.9);
-                font-size: 1.3rem;
-                font-weight: bold;
-                top: -22px;
-                left: -22px;
-            }
-        }
-    }
-
-    .main {
-        padding: 0 30px;
-        box-sizing: border-box;
-
-        .quantity {
-            margin-top: 40px;
-            color: #333;
-            position: relative;
-            display: flex;
-            align-items: center;
-
-            .quantity-block {
-                position: absolute;
-                right: 35px;
-            }
-
-            .quantity-arrow {
-                cursor: pointer;
-                position: absolute;
-
-                &1 {
-                    right: 70px;
-                }
-
-                &2 {
-                    right: 10px;
-                }
-            }
-        }
-
-        h1 {
-            font-size: 50px;
-            -webkit-margin-before: 0;
-            -webkit-margin-after: 0;
-            margin: 0 -5px -15px;
-            color: #232e3a;
-            text-transform: uppercase;
-        }
-
-        h2 {
-            color: #999999;
-            text-transform: uppercase;
-            font-size: 22px;
-        }
-
-        h3 {
-            color: #232e3a;
-            margin: 0;
-        }
-
-        img {
-            max-width: 90%;
-            margin-left: 25px;
-        }
-
-        .left,
-        .right {
-            width: 40%;
-            padding: 0 calc(5% - 1px);
-        }
-
-        .right {
-            color: #999;
-            font-size: .78rem;
-            line-height: 1.5;
-        }
-    }
-
-    .footer {
-        position: absolute;
-        bottom: 0;
-        right: 0%;
-        padding: 25px 40px 5px 0;
-        width: 90%;
-        border-top: 1px solid #ccc;
-
-        .left {
-            p:before {
-                content: "Ümumi qiymət";
-                text-transform: uppercase;
-                font-size: .7rem;
-                color: black;
-                position: absolute;
-                top: -12px;
-                width: 200%;
-            }
-        }
-
-        p {
-            color: #999999;
-            position: relative;
-            font-size: 1.5rem;
-        }
-    }
+.product-title {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #333;
 }
 
-.left {
-    float: left;
+.product-description {
+    font-size: 0.95rem;
+    color: #666;
+    margin-bottom: 12px;
+    min-height: 50px;
 }
 
-.right {
-    float: right;
+.product-price {
+    font-size: 1rem;
+    font-weight: bold;
+    color: #2d7a5f;
+    margin-bottom: 10px;
 }
 
-.addToProductBasket {
+.quantity-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.quantity-control button {
+    background-color: #e0e0e0;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: 1.2rem;
     cursor: pointer;
+    transition: background-color 0.2s;
 }
 
-@keyframes bounce {
-    50% {
-        transform: translateX(10px);
-    }
+.quantity-control button:hover {
+    background-color: #d4d4d4;
+}
+
+.quantity-display {
+    font-weight: 500;
+}
+
+.total-value {
+    font-size: 1rem;
+    font-weight: 500;
+    margin-bottom: 12px;
+    color: #444;
+}
+
+.star-rating {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 14px;
+}
+
+.star {
+    width: 16px;
+    height: 16px;
+    background-color: #e0e0e0;
+    border-radius: 3px;
+}
+
+.star.filled {
+    background-color: #f5b50a;
+}
+
+.add-to-basket {
+    width: 100%;
+    padding: 10px 0;
+    background-color: #2d7a5f;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.add-to-basket:hover {
+    background-color: #25664d;
 }
