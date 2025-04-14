@@ -7,7 +7,8 @@
             "price": 3999.90,
             "quantity": 1,
             "total_quantity": 0,
-            "quality": 5
+            "quality": 5,
+            "image": "https://picsum.photos/200/300"
         },
         {
             "id": 2,
@@ -16,7 +17,8 @@
             "price": 2099.90,
             "quantity": 1,
             "total_quantity": 0,
-            "quality": 5
+            "quality": 5,
+            "image": "https://picsum.photos/200/300"
         },
         {
             "id": 3,
@@ -25,7 +27,8 @@
             "price": 299.90,
             "quantity": 1,
             "total_quantity": 0,
-            "quality": 5
+            "quality": 5,
+            "image": "https://picsum.photos/200/300"
         },
         {
             "id": 4,
@@ -34,7 +37,8 @@
             "price": 1999.90,
             "quantity": 1,
             "total_quantity": 0,
-            "quality": 5
+            "quality": 5,
+            "image": "https://picsum.photos/200/300"
         }
     ]
 }

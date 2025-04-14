@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import BasketCard from '../components/BasketCard';
 import '../styles/BasketProducts.scss';
 
-function BasketProducts() {
+function BasketProducts({ openPopup }) { // openPopup'u props olarak alıyoruz
     const products_in_basket = useSelector(store => store.productSlice.products_in_basket);
     const total_price = useSelector(store => store.productSlice.total_price);
 
@@ -30,6 +30,7 @@ function BasketProducts() {
                                 "/image/3.jpg",
                                 "/image/4.jpg",
                             ]}
+                            openPopup={openPopup} // Popup'ı tetikleyecek fonksiyon burada
                         />
                     ))
                 ) : (

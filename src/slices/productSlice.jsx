@@ -42,12 +42,8 @@ export const appSlice = createSlice({
                     )
                 };
 
+                state.products[productIndex] = updatedProduct;
 
-                state.products = [
-                    ...state.products.slice(0, productIndex),
-                    updatedProduct,
-                    ...state.products.slice(productIndex + 1)
-                ];
                 state.productQuantity += action.payload[1];
 
                 const basketIndex = state.products_in_basket.findIndex(item => item.id === action.payload[0]);

@@ -27,7 +27,7 @@ const ProductCard = ({ id, image, title, description, price, quantity, quality }
 
   return (
     <div className="product-card">
-      <img src={image} alt={title} className="product-image" />
+      <img src={"https://picsum.photos/200/300"} alt={title} className="product-image" />
       <div className="product-content">
         <h2 className="product-title">{title}</h2>
         <p className="product-description">{description}</p>

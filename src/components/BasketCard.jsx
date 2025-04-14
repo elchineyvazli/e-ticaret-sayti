@@ -1,8 +1,18 @@
 import React, { useState } from 'react';
+import Popup from '../components/Popup'; // Yeni oluşturduğumuz Popup bileşenini dahil ediyoruz
 import '../styles/BasketCard.scss';
 
 const BasketCard = ({ title, description, price, image, quantity, quality, gallery = [] }) => {
     const [mainImage, setMainImage] = useState(image);
+    const [popupOpen, setPopupOpen] = useState(false); // Popup açık/kapalı durumu
+
+    const openPopup = () => {
+        setPopupOpen(true);
+    };
+
+    const closePopup = () => {
+        setPopupOpen(false);
+    };
 
     return (
         <div className="basket-card wide">
@@ -13,7 +23,6 @@ const BasketCard = ({ title, description, price, image, quantity, quality, galle
                         <img
                             key={idx}
                             src={img}
-                            alt={`thumb-${idx}`}
                             className={`thumb ${mainImage === img ? 'active' : ''}`}
                             onClick={() => setMainImage(img)}
                         />
@@ -30,8 +39,11 @@ const BasketCard = ({ title, description, price, image, quantity, quality, galle
                         <div key={i} className={`star ${i < quality ? 'filled' : ''}`}></div>
                     ))}
                 </div>
-                <button className="basket-order-button">Sifarişi Təsdiqlə</button>
+                <button className="basket-order-button" onClick={openPopup}>Sifarişi Təsdiqlə</button>
             </div>
+
+            {/* Popup bileşeni */}
+            <Popup isOpen={popupOpen} closePopup={closePopup} />
         </div>
     );
 };
