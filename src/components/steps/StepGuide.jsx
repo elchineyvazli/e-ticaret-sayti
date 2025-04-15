@@ -13,11 +13,12 @@ const steps = [
         icon: '💳'
     },
     {
-        title: 'Addım 3: Təsdiq və Bitirmə',
-        desc: 'Ödəniş təsdiqləndikdən sonra sistemə bildirin.',
+        title: 'Addım 3: Ödəniş Metodunu Seçin',
+        desc: 'Portmanat, LeoBank və ya Papara ilə ödənişi davam etdirin.',
         icon: '✅'
     }
 ];
+
 
 const StepGuide = ({ next, back }) => {
     const [currentStep, setCurrentStep] = useState(0);
@@ -53,14 +54,44 @@ const StepGuide = ({ next, back }) => {
                 </div>
             </div>
 
-            <div className="button-group">
-                <button className="btn secondary" onClick={handlePrevStep}>
-                    {currentStep === 0 ? '← Əvvəlki Addım' : '← Geri'}
-                </button>
-                <button className="btn primary" onClick={handleNextStep}>
-                    {currentStep === steps.length - 1 ? 'Növbəti →' : 'İrəli →'}
-                </button>
-            </div>
+            {currentStep === 2 ? (
+                <div className="payment-options">
+                    <button className="payment-btn" onClick={() => {
+                        localStorage.setItem("shouldReopenPopup", "true");
+                        localStorage.setItem("reopenStep", "4");
+                        next(4);
+                        window.open('https://portmanat.az', '_blank');
+                    }}>
+                        Portmanat Balansı ilə → 💰
+                    </button>
+                    <button className="payment-btn" onClick={() => {
+                        localStorage.setItem("shouldReopenPopup", "true");
+                        localStorage.setItem("reopenStep", "4");
+                        next(4);
+                        window.open('https://leobank.az', '_blank');
+                    }}>
+                        LeoBank ilə → 🏦
+                    </button>
+                    <button className="payment-btn" onClick={() => {
+                        localStorage.setItem("shouldReopenPopup", "true");
+                        localStorage.setItem("reopenStep", "4");
+                        next(4);
+                        window.open('https://papara.com', '_blank');
+                    }}>
+                        Papara ilə → 📲
+                    </button>
+                </div>
+            ) : (
+                <div className="button-group">
+                    <button className="btn secondary" onClick={handlePrevStep}>
+                        {currentStep === 0 ? '← Əvvəlki Addım' : '← Geri'}
+                    </button>
+                    <button className="btn primary" onClick={handleNextStep}>
+                        {currentStep === steps.length - 1 ? 'Növbəti →' : 'İrəli →'}
+                    </button>
+                </div>
+            )}
+
         </div>
     );
 };

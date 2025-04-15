@@ -3,6 +3,7 @@ import '../../styles/StepAgreement.scss';
 
 
 const StepAgreement = ({ next, back, openAgreementModal }) => {
+
     const [mainChecked, setMainChecked] = useState(false);
     const [showError, setShowError] = useState(false);
 

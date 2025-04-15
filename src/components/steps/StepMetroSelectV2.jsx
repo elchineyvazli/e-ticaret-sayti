@@ -12,9 +12,7 @@ const StepMetroSelectV2 = ({ next }) => {
     const handleSelect = (id) => {
         setSelected(id);
         localStorage.setItem("selectedMetro", id);
-        setTimeout(() => {
-            next();
-        }, 500);
+        next();
     };
 
     const handleMouseDown = (e) => {

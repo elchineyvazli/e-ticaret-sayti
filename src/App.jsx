@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import Home from "./pages/Home";
 import BasketProducts from './pages/BasketProducts';
@@ -15,7 +15,28 @@ function App() {
   const [agreementModalOpen, setAgreementModalOpen] = useState(false);
   const [onAgreementAccepted, setOnAgreementAccepted] = useState(null);
 
-  // Açma fonksiyonu (isteğe bağlı bir butonla çağırabilirsin)
+  useEffect(() => {
+    const shouldOpen = localStorage.getItem("shouldReopenPopup");
+    const step = localStorage.getItem("reopenStep");
+
+    if (shouldOpen === "true") {
+      setIsPopupOpen(true);
+      localStorage.removeItem("shouldReopenPopup");
+
+      if (step) {
+        setTimeout(() => {
+          window.dispatchEvent(
+            new CustomEvent("resumeStep", {
+              detail: { step: parseInt(step) }
+            })
+          );
+          localStorage.removeItem("reopenStep");
+        }, 500);
+      }
+    }
+  }, []);
+
+
   const openPopup = () => {
     setIsPopupOpen(true);
   };
@@ -24,7 +45,6 @@ function App() {
     setIsPopupOpen(false);
   };
 
-  // Sözleşme popup'ını açan fonksiyon
   const openAgreementModal = (onAcceptCallback) => {
     setAgreementModalOpen(true);
     setOnAgreementAccepted(() => onAcceptCallback);
@@ -43,20 +63,19 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/haqqimizda" element={<About />} />
           <Route path="/elaqe" element={<Contact />} />
-          {/* Popup'ı tetiklemek için openPopup fonksiyonunu sayfaya gönderiyoruz */}
           <Route path="/product_basket" element={<BasketProducts openPopup={openPopup} />} />
           <Route path="*" element={<NothingPage />} />
         </Routes>
       </main>
 
-      {/* Ana adım adım popup */}
-      <Popup
-        isOpen={isPopupOpen}
-        closePopup={closePopup} // 🔁 Artık düzgün kapatılıyor
-        openAgreementModal={openAgreementModal}
-      />
+      {isPopupOpen && (
+        <Popup
+          closePopup={closePopup}
+          openAgreementModal={openAgreementModal}
+          initialStep={parseInt(localStorage.getItem('reopenStep')) || 1}
+        />
+      )}
 
-      {/* Sözleşme popup'ı global */}
       <AgreementModal
         isOpen={agreementModalOpen}
         onClose={() => setAgreementModalOpen(false)}

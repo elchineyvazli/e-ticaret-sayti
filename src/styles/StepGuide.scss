@@ -94,3 +94,25 @@
         background-color: rgba(255, 255, 255, 0.2);
     }
 }
+
+.payment-btn {
+    background-color: #d85f5f;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+    transition: all 0.3s ease;
+
+    &:hover {
+        background-color: #b94a4a;
+    }
+}
+
+.payment-options {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-top: 20px;
+}

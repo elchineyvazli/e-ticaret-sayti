@@ -80,6 +80,11 @@ export const appSlice = createSlice({
                 }
             })
             state.total_price = calculateTotalPrice(state.products_in_basket);
+        },
+        clearBasket: (state) => {
+            state.products_in_basket = [];
+            state.total_price = 0;
+            state.productQuantity = 0;
         }
     },
     extraReducers: (builder) => {
@@ -96,5 +101,5 @@ export const appSlice = createSlice({
     }
 })
 
-export const { addToProductBasket, increaseQuantityProd, creaseQuantityProd } = appSlice.actions
+export const { addToProductBasket, increaseQuantityProd, creaseQuantityProd, clearBasket } = appSlice.actions
 export default appSlice.reducer

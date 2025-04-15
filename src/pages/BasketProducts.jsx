@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import BasketCard from '../components/BasketCard';
 import '../styles/BasketProducts.scss';
 
-function BasketProducts({ openPopup }) { // openPopup'u props olarak alıyoruz
+function BasketProducts({ openPopup }) {
     const products_in_basket = useSelector(store => store.productSlice.products_in_basket);
     const total_price = useSelector(store => store.productSlice.total_price);
 
@@ -12,6 +12,7 @@ function BasketProducts({ openPopup }) { // openPopup'u props olarak alıyoruz
                 <h2>Səbət Cəmi:</h2>
                 <p className="total-price">₼{total_price.toFixed(2)}</p>
             </div>
+
             <div className="basket-products">
                 {products_in_basket.length > 0 ? (
                     products_in_basket.map(product => (
@@ -24,13 +25,7 @@ function BasketProducts({ openPopup }) { // openPopup'u props olarak alıyoruz
                             quantity={product.quantity}
                             quality={product.quality}
                             total_quantity={product.total_quantity}
-                            gallery={[
-                                "/image/1.jpg",
-                                "/image/2.jpg",
-                                "/image/3.jpg",
-                                "/image/4.jpg",
-                            ]}
-                            openPopup={openPopup} // Popup'ı tetikleyecek fonksiyon burada
+                            gallery={["/image/1.jpg", "/image/2.jpg", "/image/3.jpg", "/image/4.jpg"]}
                         />
                     ))
                 ) : (
@@ -39,6 +34,14 @@ function BasketProducts({ openPopup }) { // openPopup'u props olarak alıyoruz
                     </div>
                 )}
             </div>
+
+            {products_in_basket.length > 0 && (
+                <div className="basket-action">
+                    <button className="basket-order-button-global" onClick={openPopup}>
+                        Sifarişi Təsdiqlə
+                    </button>
+                </div>
+            )}
         </div>
     );
 }

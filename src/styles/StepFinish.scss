@@ -1,0 +1,57 @@
+@keyframes popIn {
+    from {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+.finish-container {
+    text-align: center;
+    color: white;
+    transition: opacity 1s ease;
+    opacity: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    animation: popIn 0.3s ease;
+
+    &.fade-out {
+        opacity: 0;
+    }
+
+    .finish-icon {
+        font-size: 4rem;
+        color: #4caf50;
+    }
+
+    .finish-title {
+        font-size: 2rem;
+    }
+
+    .finish-message {
+        font-size: 1rem;
+        color: #ccc;
+        max-width: 400px;
+    }
+
+    .btn.primary {
+        background-color: #d85f5f;
+        color: white;
+        padding: 10px 22px;
+        font-size: 1rem;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        border: none;
+
+        &:hover {
+            background-color: #b94a4a;
+        }
+    }
+}
