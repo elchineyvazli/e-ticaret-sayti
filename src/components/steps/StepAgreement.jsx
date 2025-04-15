@@ -1,13 +1,21 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import '../../styles/StepAgreement.scss';
 
 
-const StepAgreement = ({ next, back }) => {
-    const [isChecked, setIsChecked] = useState(false);
+const StepAgreement = ({ next, back, openAgreementModal }) => {
+    const [mainChecked, setMainChecked] = useState(false);
     const [showError, setShowError] = useState(false);
 
+    const handleMainToggleClick = () => {
+        if (!mainChecked) {
+            openAgreementModal(() => setMainChecked(true));
+        } else {
+            setMainChecked(false);
+        }
+    };
+
     const handleNext = () => {
-        if (!isChecked) {
+        if (!mainChecked) {
             setShowError(true);
             return;
         }
@@ -19,9 +27,9 @@ const StepAgreement = ({ next, back }) => {
         <div className="agreement-container">
             <h2 className="agreement-title">Ödəniş Şərtləri</h2>
 
-            <div className="toggle-wrapper">
+            <div className="toggle-wrapper" onClick={handleMainToggleClick}>
                 <label className="switch">
-                    <input type="checkbox" checked={isChecked} onChange={() => setIsChecked(!isChecked)} />
+                    <input type="checkbox" checked={mainChecked} readOnly />
                     <span className="slider"></span>
                 </label>
                 <span className="toggle-label">Ödəniş şərtlərini qəbul edirəm</span>
@@ -38,5 +46,7 @@ const StepAgreement = ({ next, back }) => {
         </div>
     );
 };
+
+
 
 export default StepAgreement;

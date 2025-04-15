@@ -1,0 +1,17 @@
+@media (max-width: 768px) {
+    .popup-window.horizontal {
+        flex-direction: column;
+        max-height: 95vh;
+        width: 95%;
+    }
+
+    .popup-image-section {
+        padding: 20px;
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .popup-content {
+        padding: 20px;
+    }
+}

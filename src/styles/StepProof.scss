@@ -1,0 +1,277 @@
+.proof-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    position: relative;
+}
+
+.proof-title {
+    font-size: 1.6rem;
+    color: white;
+}
+
+.upload-box {
+    border: 2px dashed #d85f5f;
+    padding: 40px 30px;
+    border-radius: 16px;
+    cursor: pointer;
+    text-align: center;
+    color: #ffcfcf;
+    width: 100%;
+    max-width: 500px;
+    position: relative;
+
+    input {
+        display: none;
+    }
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.05);
+    }
+}
+
+.file-name {
+    font-size: 1rem;
+    color: #fff;
+}
+
+.button-group {
+    display: flex;
+    gap: 20px;
+    z-index: 1;
+    position: relative;
+}
+
+.btn {
+    padding: 10px 22px;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn.primary {
+    background-color: #d85f5f;
+    color: white;
+
+    &:hover {
+        background-color: #b94a4a;
+    }
+
+    &:disabled {
+        background-color: #999;
+        cursor: not-allowed;
+    }
+}
+
+.btn.secondary {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+}
+
+.btn.confirm {
+    background-color: #4caf50;
+    color: white;
+
+    &:hover {
+        background-color: #3e9143;
+    }
+}
+
+.confirmation {
+    text-align: center;
+    color: #b4ffb4;
+
+    .check-icon {
+        font-size: 3rem;
+        margin-bottom: 10px;
+    }
+}
+
+.chat-widget {
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    text-align: right;
+
+    .chat-balloon {
+        background-color: #fff;
+        padding: 10px 14px;
+        border-radius: 12px;
+        max-width: 240px;
+        font-size: 0.9rem;
+        color: #333;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        margin-bottom: 4px;
+    }
+
+    .chat-label {
+        font-size: 0.8rem;
+        color: #fff;
+        opacity: 0.7;
+    }
+}
+
+/* 🔐 Popup onay ekranı */
+.popup-overlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(4px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1002 !important;
+}
+
+.popup-window {
+    max-height: 95vh; // artırıldı
+    height: auto;
+    background: #1e1e1e;
+    border-radius: 16px;
+    padding: 0;
+    color: white;
+    width: 90%;
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+    animation: popupSlide 0.3s ease;
+    overflow: hidden;
+
+    .btn {
+        margin-top: 10px;
+    }
+}
+
+
+.popup-header {
+    padding: 20px 30px 10px;
+    text-align: center;
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.popup-body {
+    padding: 0 30px;
+    overflow-y: auto;
+    flex: 1;
+    text-align: center;
+}
+
+.popup-footer {
+    padding: 20px 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 10px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: #1e1e1e;
+
+    .btn {
+        width: 480%;
+    }
+}
+
+
+.preview-image {
+    max-width: 100%;
+    max-height: 300px;
+    margin: 20px 0;
+    border-radius: 12px;
+    border: 1px solid #444;
+    object-fit: contain;
+}
+
+.scrollable-content {
+    overflow-y: auto;
+    padding-right: 8px;
+    margin-bottom: 20px;
+}
+
+.warning-text {
+    color: #ff6b6b;
+    font-size: 0.95rem;
+    margin-bottom: 20px;
+}
+
+@keyframes popupSlide {
+    from {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.popup-window.horizontal {
+    display: flex;
+    flex-direction: row;
+    width: 95%;
+    max-width: 800px;
+    max-height: 90vh;
+    background: #1e1e1e;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 0 30px rgba(0, 0, 0, 0.6);
+    animation: popupSlide 0.3s ease;
+}
+
+/* Sol taraf: görsel */
+.popup-image-section {
+    flex: 1;
+    background-color: #111;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+
+    img.preview-image {
+        max-width: 100%;
+        max-height: 400px;
+        border-radius: 12px;
+        border: 1px solid #444;
+        object-fit: contain;
+    }
+}
+
+/* Sağ taraf: başlık + uyarı + buton */
+.popup-content {
+    flex: 1;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 25px;
+    text-align: center;
+
+    h3 {
+        font-size: 1.3rem;
+        font-weight: bold;
+    }
+
+    .warning-text {
+        color: #ff6b6b;
+        font-size: 0.95rem;
+    }
+
+    .popup-buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+
+        .btn {
+            width: 100%;
+        }
+    }
+}

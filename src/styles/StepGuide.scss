@@ -1,0 +1,96 @@
+.guide-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.guide-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    max-width: 600px;
+    color: white;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+}
+
+.guide-icon {
+    font-size: 3rem;
+    margin-bottom: 20px;
+}
+
+.guide-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+}
+
+.guide-desc {
+    font-size: 1rem;
+    line-height: 1.5;
+}
+
+.step-indicator {
+    margin-top: 25px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    background-color: #ccc;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+.dot.active {
+    background-color: #d85f5f;
+    box-shadow: 0 0 8px #d85f5f;
+}
+
+.button-group {
+    display: flex;
+    gap: 20px;
+}
+
+.btn {
+    padding: 10px 22px;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: none;
+}
+
+.btn.primary {
+    background-color: #d85f5f;
+    color: white;
+
+    &:hover {
+        background-color: #b94a4a;
+    }
+}
+
+.btn.secondary {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+
+    &:hover {
+        background-color: rgba(255, 255, 255, 0.2);
+    }
+}
