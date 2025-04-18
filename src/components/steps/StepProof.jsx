@@ -1,6 +1,6 @@
 // StepProof.jsx (GÜNCELLENMİŞ VE TAM UYUMLU)
 import { useState } from 'react';
-import { logEvent } from './logSystem';
+import { logEvent } from '../../data/logSystem';
 import '../../styles/StepProof.scss';
 import '../../styles/mobile/StepProofMobile.scss';
 

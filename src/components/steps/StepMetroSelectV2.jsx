@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import metros from './metros';
+import metros from '../../data/metros';
 import '../../styles/StepMetroSelectV2.scss';
 
 const StepMetroSelectV2 = ({ next }) => {

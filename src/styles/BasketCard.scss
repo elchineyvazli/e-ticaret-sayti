@@ -1,70 +1,107 @@
-/* BasketCard.scss */
-
 .basket-card {
-    background-color: #fff;
-    border-radius: 18px;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
-    overflow: hidden;
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    padding: 20px;
+    margin: 20px 0;
+    position: relative;
+    transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
-    max-width: 350px;
-    transition: transform 0.3s ease;
-    padding: 16px;
-    margin: 10px;
+    opacity: 0;
+    transform: translateY(10px);
+
+    &.fade-in {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    @media (max-width: 768px) {
+        padding: 16px;
+    }
+}
+
+.delete-button {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #ffeaea;
+    border: none;
+    border-radius: 50%;
+    padding: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
 
     &:hover {
-        transform: translateY(-5px);
+        background: #ffbcbc;
+    }
+
+    svg {
+        color: #c0392b;
     }
 }
 
 .basket-image {
-    position: relative;
     text-align: center;
 
     .main-image {
         width: 100%;
-        height: auto;
-        border-radius: 12px;
+        max-height: 250px;
         object-fit: cover;
+        border-radius: 14px;
     }
 
     .thumbnail-group {
         margin-top: 10px;
         display: flex;
-        justify-content: center;
-        gap: 8px;
+        overflow-x: auto;
+        gap: 10px;
+        padding-bottom: 5px;
+        -webkit-overflow-scrolling: touch;
 
         .thumb {
-            width: 40px;
-            height: 40px;
-            border-radius: 8px;
+            width: 50px;
+            height: 50px;
             object-fit: cover;
+            border-radius: 10px;
+            cursor: pointer;
             opacity: 0.6;
             border: 2px solid transparent;
-            cursor: pointer;
+            transition: all 0.3s;
 
             &.active {
                 opacity: 1;
-                border-color: #d85f5f;
+                border-color: #2d7a5f;
+            }
+
+            &:hover {
+                opacity: 1;
             }
         }
     }
 }
 
 .basket-details {
-    padding-top: 16px;
+    margin-top: 16px;
 
     .title {
-        font-size: 1.2rem;
+        font-size: 1.3rem;
         font-weight: 600;
-        margin-bottom: 8px;
         color: #333;
+        margin-bottom: 8px;
     }
 
     .description {
         font-size: 0.95rem;
         color: #666;
         margin-bottom: 12px;
+
+        .read-more {
+            margin-left: 8px;
+            color: #2d7a5f;
+            font-weight: 600;
+            cursor: pointer;
+        }
     }
 
     .meta {
@@ -72,26 +109,49 @@
         justify-content: space-between;
         font-size: 0.95rem;
         margin-bottom: 10px;
-
-        .quantity,
-        .price {
-            color: #444;
-        }
+        color: #444;
     }
 
     .stars {
         display: flex;
-        gap: 4px;
+        gap: 6px;
+    }
+}
 
-        .star {
-            width: 18px;
-            height: 18px;
-            background-color: #e0e0e0;
-            border-radius: 50%;
+.quantity-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin: 10px 0;
 
-            &.filled {
-                background-color: #ffd700;
-            }
+    button {
+        background-color: #d85f5f;
+        color: white;
+        font-size: 1.1rem;
+        border: none;
+        border-radius: 50%;
+        width: 32px;
+        height: 32px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+
+        &:hover {
+            background-color: #b94a4a;
         }
     }
+
+    span {
+        font-size: 1.1rem;
+        font-weight: bold;
+        color: #444;
+        width: 30px;
+        text-align: center;
+    }
+}
+
+.quantity-controls button:disabled {
+    background-color: #eee;
+    color: #999;
+    cursor: not-allowed;
 }

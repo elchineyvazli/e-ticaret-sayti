@@ -1,10 +1,16 @@
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { removeFromBasket } from '../slices/productSlice';
 import BasketCard from '../components/BasketCard';
 import '../styles/BasketProducts.scss';
 
 function BasketProducts({ openPopup }) {
+    const dispatch = useDispatch();
     const products_in_basket = useSelector(store => store.productSlice.products_in_basket);
     const total_price = useSelector(store => store.productSlice.total_price);
+
+    const handleRemove = (id) => {
+        dispatch(removeFromBasket(id));
+    };
 
     return (
         <div className="basket-container">
@@ -17,6 +23,7 @@ function BasketProducts({ openPopup }) {
                 {products_in_basket.length > 0 ? (
                     products_in_basket.map(product => (
                         <BasketCard
+                            id={product.id}
                             key={product.id}
                             title={product.title}
                             price={product.price}
@@ -25,12 +32,14 @@ function BasketProducts({ openPopup }) {
                             quantity={product.quantity}
                             quality={product.quality}
                             total_quantity={product.total_quantity}
-                            gallery={["/image/1.jpg", "/image/2.jpg", "/image/3.jpg", "/image/4.jpg"]}
+                            gallery={product.gallery}
+                            onRemove={() => handleRemove(product.id)}
                         />
                     ))
                 ) : (
                     <div className="empty-message">
                         <h3>Səbətiniz boşdur.</h3>
+                        <img src="../images/mavi-saat" alt="" />
                     </div>
                 )}
             </div>

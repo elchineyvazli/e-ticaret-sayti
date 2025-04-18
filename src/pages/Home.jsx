@@ -25,6 +25,7 @@ function Home() {
                     price={prod.price}
                     quantity={prod.quantity}
                     quality={prod.quality}
+                    gallery={prod.gallery}
                 />
             ))}
         </div>

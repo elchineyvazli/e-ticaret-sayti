@@ -11,7 +11,7 @@ const initialState = {
 const BASE_URL = "http://localhost:8000"
 
 export const getAllProducts = createAsyncThunk("getAllProducts", async () => {
-    const response = await fetch(`${BASE_URL}/products`)
+    const response = await fetch(`${BASE_URL}/api/products/`)
     const data = await response.json()
     return data
 });
@@ -62,30 +62,42 @@ export const appSlice = createSlice({
             }
         },
         increaseQuantityProd: (state, action) => {
-            state.products.forEach(prod => {
-                if (
-                    prod.id == action.payload
-                    &&
-                    prod.quantity < 10
-                ) {
-                    prod.quantity += 1;
-                }
-            })
+            const prodInBasket = state.products_in_basket.find(prod => prod.id === action.payload);
+            if (prodInBasket && prodInBasket.quantity < 10) {
+                prodInBasket.quantity += 1;
+            }
+
+            const prodInProducts = state.products.find(prod => prod.id === action.payload);
+            if (prodInProducts && prodInProducts.quantity < 10) {
+                prodInProducts.quantity += 1;
+            }
+
             state.total_price = calculateTotalPrice(state.products_in_basket);
         },
         creaseQuantityProd: (state, action) => {
-            state.products.forEach(prod => {
-                if (prod.id == action.payload && prod.quantity > 1) {
-                    prod.quantity -= 1;
-                }
-            })
+            const prodInBasket = state.products_in_basket.find(prod => prod.id === action.payload);
+            if (prodInBasket && prodInBasket.quantity > 1) {
+                prodInBasket.quantity -= 1;
+            }
+
+            const prodInProducts = state.products.find(prod => prod.id === action.payload);
+            if (prodInProducts && prodInProducts.quantity > 1) {
+                prodInProducts.quantity -= 1;
+            }
+
             state.total_price = calculateTotalPrice(state.products_in_basket);
         },
         clearBasket: (state) => {
             state.products_in_basket = [];
             state.total_price = 0;
             state.productQuantity = 0;
+        },
+        removeFromBasket: (state, action) => {
+            state.products_in_basket = state.products_in_basket.filter(item => item.id !== action.payload);
+            state.total_price = calculateTotalPrice(state.products_in_basket);
+            state.productQuantity = state.products_in_basket.reduce((acc, item) => acc + item.quantity, 0);
         }
+
     },
     extraReducers: (builder) => {
         builder.addCase(getAllProducts.fulfilled, (state, action) => {
@@ -101,5 +113,11 @@ export const appSlice = createSlice({
     }
 })
 
-export const { addToProductBasket, increaseQuantityProd, creaseQuantityProd, clearBasket } = appSlice.actions
+export const {
+    addToProductBasket,
+    increaseQuantityProd,
+    creaseQuantityProd,
+    clearBasket,
+    removeFromBasket
+} = appSlice.actions
 export default appSlice.reducer
