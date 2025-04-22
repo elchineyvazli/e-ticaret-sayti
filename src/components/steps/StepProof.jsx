@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { logEvent } from '../../data/logSystem';
 import '../../styles/steps_styles/StepProof.scss';
-import '../../styles/mobile/StepProofMobile.scss';
+import '../../styles/mobile_styles/StepProofMobile.scss';
 
 const StepProof = ({ next, back }) => {
     const [file, setFile] = useState(null);

@@ -39,8 +39,22 @@ function Navbar() {
           {dropdownOpen && (
             <div className="user-dropdown">
               <div className="triangle" />
-              <a href="/login" target="_blank" className="dropdown-link">🔑 Giriş</a>
-              <a href="/register" target="_blank" className="dropdown-link">📝 Qeydiyyat</a>
+              <Link
+                to="/login"
+                target="_blank"
+                className="dropdown-link"
+                onClick={() => localStorage.setItem("auth_mode", "login")}
+              >
+                🔑 Giriş
+              </Link>
+              <Link
+                to="/login"
+                target="_blank"
+                className="dropdown-link"
+                onClick={() => localStorage.setItem("auth_mode", "register")}
+              >
+                📝 Qeydiyyat
+              </Link>
             </div>
           )}
         </div>

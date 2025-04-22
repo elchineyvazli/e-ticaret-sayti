@@ -9,6 +9,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Popup from './components/Popup';
 import AgreementModal from "./components/AgreementModal";
+import Login from "./pages/Login";
 
 function App() {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -65,6 +66,7 @@ function App() {
           <Route path="/elaqe" element={<Contact />} />
           <Route path="/product_basket" element={<BasketProducts openPopup={openPopup} />} />
           <Route path="*" element={<NothingPage />} />
+          <Route path="/login" element={<Login />} />
         </Routes>
       </main>
 
