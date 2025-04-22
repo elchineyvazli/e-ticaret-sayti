@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/BasketCard.scss';
+import '../styles/comp_styles/BasketCard.scss';
 import { AiOutlineClose } from 'react-icons/ai';
 import { useDispatch } from 'react-redux';
 import { creaseQuantityProd } from '../slices/productSlice';

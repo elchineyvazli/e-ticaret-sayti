@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
 import metros from '../../data/metros';
-import '../../styles/StepMetroSelectV2.scss';
+import '../../styles/steps_styles/StepMetroSelectV2.scss';
 
 const StepMetroSelectV2 = ({ next }) => {
     const [selected, setSelected] = useState(null);

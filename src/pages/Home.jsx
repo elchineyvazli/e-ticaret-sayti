@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllProducts } from '../slices/productSlice';
 import ProductCard from '../components/ProductCard';
-import '../styles/Home.scss';
+import '../styles/pages_styles/Home.scss';
 
 function Home() {
     const dispatch = useDispatch();
@@ -26,6 +26,7 @@ function Home() {
                     quantity={prod.quantity}
                     quality={prod.quality}
                     gallery={prod.gallery}
+                    total_quantity={prod.total_quantity}
                 />
             ))}
         </div>

@@ -19,48 +19,59 @@ export const getAllProducts = createAsyncThunk("getAllProducts", async () => {
 const calculateTotalPrice = (products) =>
     products.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
+// 🔧 return eksikti
+const recalculateProductQuantity = (products) =>
+    products.reduce((sum, item) => sum + item.quantity, 0);
 
 export const appSlice = createSlice({
     name: 'productReducer',
     initialState,
     reducers: {
         addToProductBasket: (state, action) => {
-            const productIndex = state.products.findIndex(el => el.id === action.payload[0]);
+            const id = action.payload[0];
+            const amountToAdd = action.payload[1];
 
-            if (productIndex !== -1) {
-                const updatedProduct = {
-                    ...state.products[productIndex],
-                    quantity: action.payload[1],
-                    total_quantity: (
-                        state.products[action.payload[0] - 1].total_quantity == 0 ?
-                            (
-                                state.products[action.payload[0] - 1].quantity
-                            ) :
-                            (
-                                state.products[action.payload[0] - 1].total_quantity + action.payload[1]
-                            )
-                    )
-                };
+            const productIndex = state.products.findIndex(p => p.id === id);
+            if (productIndex === -1) return;
 
-                state.products[productIndex] = updatedProduct;
+            const product = state.products[productIndex];
+            const total_quantity = product.total_quantity;
 
-                state.productQuantity += action.payload[1];
+            // Sepette varsa, önceki miktarı al
+            const existingItem = state.products_in_basket.find(item => item.id === id);
+            const existingQuantity = existingItem?.quantity || 0;
 
-                const basketIndex = state.products_in_basket.findIndex(item => item.id === action.payload[0]);
+            // 🔐 Yeni toplam miktarı hesapla
+            const newTotalQuantity = existingQuantity + amountToAdd;
 
-                if (basketIndex === -1) {
-                    state.products_in_basket = [...state.products_in_basket, updatedProduct];
-                } else {
-                    state.products_in_basket = state.products_in_basket.map(item => {
-                        return item.id === action.payload[0]
-                            ? { ...item, quantity: item.quantity + action.payload[1] }
-                            : item;
-                    });
-                }
-                state.total_price = calculateTotalPrice(state.products_in_basket);
-
+            if (newTotalQuantity > total_quantity) {
+                alert(`Stokda yalnız ${total_quantity} ədəd var!`);
+                return;
             }
+
+            const updatedProduct = {
+                ...product,
+                quantity: amountToAdd,
+                total_quantity,
+            };
+
+            // Ürünü güncelle
+            state.products[productIndex] = updatedProduct;
+
+            // 🔁 Sepette varsa üzerine ekle, yoksa yeni ekle
+            const basketIndex = state.products_in_basket.findIndex(item => item.id === id);
+            if (basketIndex === -1) {
+                state.products_in_basket.push({ ...updatedProduct });
+            } else {
+                state.products_in_basket[basketIndex].quantity += amountToAdd;
+            }
+
+            // Fiyat ve sayaçları güncelle
+            state.total_price = calculateTotalPrice(state.products_in_basket);
+            state.productQuantity = recalculateProductQuantity(state.products_in_basket);
         },
+
+
         increaseQuantityProd: (state, action) => {
             const prodInBasket = state.products_in_basket.find(prod => prod.id === action.payload);
             if (prodInBasket && prodInBasket.quantity < 10) {
@@ -73,7 +84,9 @@ export const appSlice = createSlice({
             }
 
             state.total_price = calculateTotalPrice(state.products_in_basket);
+            state.productQuantity = recalculateProductQuantity(state.products_in_basket);
         },
+
         creaseQuantityProd: (state, action) => {
             const prodInBasket = state.products_in_basket.find(prod => prod.id === action.payload);
             if (prodInBasket && prodInBasket.quantity > 1) {
@@ -86,19 +99,22 @@ export const appSlice = createSlice({
             }
 
             state.total_price = calculateTotalPrice(state.products_in_basket);
+            state.productQuantity = recalculateProductQuantity(state.products_in_basket);
         },
+
         clearBasket: (state) => {
             state.products_in_basket = [];
             state.total_price = 0;
             state.productQuantity = 0;
         },
+
         removeFromBasket: (state, action) => {
             state.products_in_basket = state.products_in_basket.filter(item => item.id !== action.payload);
             state.total_price = calculateTotalPrice(state.products_in_basket);
-            state.productQuantity = state.products_in_basket.reduce((acc, item) => acc + item.quantity, 0);
+            state.productQuantity = recalculateProductQuantity(state.products_in_basket); // 🔧 sabitlendi
         }
-
     },
+
     extraReducers: (builder) => {
         builder.addCase(getAllProducts.fulfilled, (state, action) => {
             state.loading = false
@@ -120,4 +136,5 @@ export const {
     clearBasket,
     removeFromBasket
 } = appSlice.actions
+
 export default appSlice.reducer

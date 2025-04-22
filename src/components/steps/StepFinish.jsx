@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { clearBasket } from '../../slices/productSlice';
-import '../../styles/StepFinish.scss';
+import '../../styles/steps_styles/StepFinish.scss';
 import { useNavigate } from 'react-router-dom';
 
 const StepFinish = ({ close }) => {

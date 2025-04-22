@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { removeFromBasket } from '../slices/productSlice';
 import BasketCard from '../components/BasketCard';
-import '../styles/BasketProducts.scss';
+import '../styles/pages_styles/BasketProducts.scss';
 
 function BasketProducts({ openPopup }) {
     const dispatch = useDispatch();

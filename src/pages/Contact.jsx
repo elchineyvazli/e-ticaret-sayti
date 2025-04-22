@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/Contact.scss';
+import '../styles/pages_styles/Contact.scss';
 import { FaWhatsapp, FaTelegramPlane, FaEnvelope, FaLinkedin } from 'react-icons/fa';
 
 function Contact() {

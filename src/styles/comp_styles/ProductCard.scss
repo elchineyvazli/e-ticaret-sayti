@@ -111,16 +111,7 @@
 
         .stars {
             display: flex;
-            gap: 4px;
-
-            span {
-                color: #ccc;
-                font-size: 16px;
-            }
-
-            .filled {
-                color: #f5b50a;
-            }
+            gap: 6px;
         }
 
         button {
@@ -138,4 +129,10 @@
             }
         }
     }
+}
+
+.stock-warning {
+    font-size: 0.85rem;
+    color: #c0392b;
+    font-weight: 600;
 }

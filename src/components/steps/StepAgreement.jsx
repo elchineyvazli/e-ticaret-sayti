@@ -1,6 +1,5 @@
 import { useState } from 'react';
-import '../../styles/StepAgreement.scss';
-
+import '../../styles/steps_styles/StepAgreement.scss';
 
 const StepAgreement = ({ next, back, openAgreementModal }) => {
 

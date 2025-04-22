@@ -1,24 +1,24 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import StepMetroSelectV2 from './steps/StepMetroSelectV2';
 import StepAgreement from './steps/StepAgreement';
 import StepGuide from './steps/StepGuide';
 import StepProof from './steps/StepProof';
 import StepFinish from './steps/StepFinish';
-import '../styles/Popup.scss';
+import '../styles/comp_styles/Popup.scss';
 
 const Popup = ({ closePopup, openAgreementModal, initialStep = 1 }) => {
     const [step, setStep] = useState(initialStep);
     const [isTransitioning, setIsTransitioning] = useState(false);
 
     const goNext = () => {
-        if (isTransitioning) return; // 👈 Çoklu tıklamayı engelle
-        setIsTransitioning(true);   // 🔒 Kilitliyoruz
+        if (isTransitioning) return;
+        setIsTransitioning(true);
 
         setStep(prev => prev + 1);
 
         setTimeout(() => {
-            setIsTransitioning(false); // 🔓 500ms sonra tekrar aç
-        }, 500); // bu sürede UI geçiş animasyonunu da bitirir
+            setIsTransitioning(false);
+        }, 500);
     };
     const goBack = () => setStep(prev => prev - 1);
 
@@ -32,9 +32,6 @@ const Popup = ({ closePopup, openAgreementModal, initialStep = 1 }) => {
             default: return null;
         }
     };
-
-    // DEBUG: logla bakalım
-    console.log("🔁 STEP:", step);
 
     return (
         <div className="popup-overlay">

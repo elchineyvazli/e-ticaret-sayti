@@ -1,6 +1,6 @@
 // AgreementModal.jsx (GLOBAL SÖZLƏŞMƏ MODALI)
 import React, { useState } from 'react';
-import '../styles/AgreementModal.scss';
+import '../styles/comp_styles/AgreementModal.scss';
 
 const AgreementModal = ({ isOpen, onClose, onAccept }) => {
     const [innerChecked, setInnerChecked] = useState(false);

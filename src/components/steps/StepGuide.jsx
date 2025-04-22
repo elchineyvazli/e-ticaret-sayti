@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import '../../styles/StepGuide.scss';
+import '../../styles/steps_styles/StepGuide.scss';
 
 const steps = [
     {
