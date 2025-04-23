@@ -1,0 +1,80 @@
+.verification-popup {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 20px;
+    padding: 2rem;
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    animation: popupExpand 0.5s ease-in-out;
+
+    h3 {
+        color: #2d7a5f;
+        margin-bottom: 1rem;
+    }
+
+    input {
+        width: 100%;
+        padding: 0.8rem;
+        font-size: 1.2rem;
+        border-radius: 10px;
+        border: 2px solid #ccc;
+        outline: none;
+        transition: 0.3s;
+        margin-bottom: 1rem;
+
+        &.success {
+            border-color: #2d7a5f;
+            background-color: #eafaf2;
+        }
+
+        &.error {
+            border-color: #e74c3c;
+            background-color: #ffeaea;
+        }
+    }
+
+    .success-msg {
+        color: #2d7a5f;
+        font-weight: bold;
+        margin-bottom: 1rem;
+    }
+
+    .error-msg {
+        color: #e74c3c;
+        margin-bottom: 1rem;
+    }
+
+    button {
+        background-color: #2d7a5f;
+        color: white;
+        padding: 0.8rem 1.5rem;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        font-size: 1rem;
+
+        &:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        &:hover:enabled {
+            background-color: #245f4b;
+        }
+    }
+}
+
+@keyframes popupExpand {
+    from {
+        transform: scale(0.85);
+        opacity: 0;
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
