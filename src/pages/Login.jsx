@@ -1,12 +1,12 @@
-// ✅ Login.jsx (FIX'lenmiş sürüm)
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../styles/pages_styles/Login.scss';
 
 function Login() {
     const [mode, setMode] = useState('login');
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [phone, setPhone] = useState('');
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
@@ -30,19 +30,24 @@ function Login() {
         try {
             if (mode === 'login') {
                 const res = await axios.post('http://localhost:8000/api/auth/login/', {
-                    email,
+                    username,
                     password,
                 });
                 localStorage.setItem('token', res.data.access);
                 setMessage('Giriş uğurlu! Əvvəlki səhifəyə qayıdın ✅');
                 setTimeout(() => window.close(), 2000);
             } else {
-                const res = await axios.post('http://localhost:8000/api/auth/register/', {
-                    email,
-                    phone,
-                    password,
-                });
-                setMessage('Qeydiyyat uğurlu! Emailə göndərilən kod ilə təsdiqləyin ✉️');
+                if (password !== confirmPassword) {
+                    setError("Şifrələr uyğun deyil.");
+                    return;
+                } else {
+                    const res = await axios.post('http://localhost:8000/api/auth/register/', {
+                        username,
+                        phone_number: phone,
+                        password,
+                    });
+                    setMessage('Qeydiyyat uğurlu! WhatsApp nömrənizə kod göndərildi ✅');
+                }
             }
         } catch (err) {
             if (err.response?.data) {
@@ -74,32 +79,66 @@ function Login() {
             <form className="login-card" onSubmit={handleSubmit}>
                 <h2>{mode === 'login' ? 'Giriş' : 'Qeydiyyat'}</h2>
                 {mode === 'register' && (
-                    <input
-                        type="tel"
-                        placeholder="Telefon"
-                        value={phone}
-                        onChange={(e) => {
-                            const val = e.target.value;
-                            if (/^\d*$/.test(val)) setPhone(val);
-                        }}
-                        required
-                    />
+                    <div className="phone-input-wrapper">
+                        <span className="phone-prefix">🇦🇿 +994</span>
+                        <input
+                            type="tel"
+                            placeholder="___-___-__-__"
+                            value={phone}
+                            onChange={(e) => {
+                                let digits = e.target.value.replace(/\D/g, '').slice(0, 10); // sadece rakam ve max 10 hane
+                                let formatted = '';
+                                if (digits.length > 0) formatted += digits.slice(0, 3);
+                                if (digits.length >= 4) formatted += '-' + digits.slice(3, 6);
+                                if (digits.length >= 7) formatted += '-' + digits.slice(6, 8);
+                                if (digits.length >= 9) formatted += '-' + digits.slice(8, 10);
+                                setPhone(formatted);
+
+                                // ✅ Prefiks doğrulama
+                                const prefix = digits.slice(0, 3);
+                                const validPrefixes = ['050', '051', '010', '055', '099', '070', '077', '060'];
+                                if (prefix.length === 3 && !validPrefixes.includes(prefix)) {
+                                    setError("Prefiks yanlışdır. Zəhmət olmasa düzgün operator kodu daxil edin.");
+                                } else {
+                                    setError(""); // prefix uygunsa hata mesajı silinir
+                                }
+                            }}
+                            required
+                        />
+                    </div>
                 )}
                 <input
-                    type="email"
-                    placeholder="Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    type="text"
+                    placeholder="İstifadəçi adı"
+                    value={username}
+                    onChange={(e) => {
+                        const val = e.target.value;
+                        if (/^[a-zA-Z0-9_]*$/.test(val)) setUsername(val);
+                    }}
                     required
                 />
+
                 <input
                     type="password"
                     placeholder="Şifrə"
                     value={password}
-                    onChange={(e) => setPassword(e.target.value)}
+                    onChange={(e) => {
+                        const val = e.target.value;
+                        if (/^[a-zA-Z0-9_]*$/.test(val)) setPassword(val);
+                    }}
                     required
                 />
-                <button type="submit">{mode === 'login' ? 'Daxil ol' : 'Qeydiyyat'}</button>
+                <input
+                    type="password"
+                    placeholder="Şifrəni təsdiqlə"
+                    value={confirmPassword}
+                    onChange={(e) => {
+                        const val = e.target.value;
+                        if (/^[a-zA-Z0-9_]*$/.test(val)) setConfirmPassword(val);
+                    }}
+                    required
+                />
+                <button type="submit">{mode === 'login' ? 'Daxil ol' : 'Qeydiyyatdan keç'}</button>
                 {message && <p className="success">{message}</p>}
                 {error && <p className="error">{error}</p>}
             </form>
