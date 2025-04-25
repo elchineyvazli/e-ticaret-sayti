@@ -2,9 +2,9 @@ nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background-color: #ffffff;
+    background: #ffffff;
     padding: 16px 32px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.05);
     position: sticky;
     top: 0;
     z-index: 100;
@@ -12,17 +12,18 @@ nav {
     .links {
         display: flex;
         align-items: center;
-        gap: 24px;
+        gap: 28px;
 
         .link {
             text-decoration: none;
             font-size: 1rem;
             color: #2d7a5f;
             font-weight: 500;
-            transition: color 0.3s;
+            transition: all 0.3s ease;
 
             &:hover {
-                color: #1f5642;
+                color: #1b4f3a;
+                transform: scale(1.05);
             }
         }
 
@@ -43,56 +44,106 @@ nav {
                 align-items: center;
                 justify-content: center;
                 font-weight: bold;
+                box-shadow: 0 0 4px rgba(0, 0, 0, 0.2);
             }
         }
 
         .user-icon-wrapper {
             position: relative;
+            cursor: pointer;
 
-            .user-icon {
-                font-size: 20px;
-                color: #2d7a5f;
-                cursor: pointer;
+            .initials-avatar {
+                background: linear-gradient(135deg, #2d7a5f, #56a38a);
+                color: white;
+                border-radius: 50%;
+                width: 34px;
+                height: 34px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+                text-transform: uppercase;
+                font-size: 14px;
+                box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+                transition: transform 0.3s ease;
+
+                &:hover {
+                    transform: rotate(6deg) scale(1.05);
+                }
             }
 
             .user-dropdown {
                 position: absolute;
-                top: 36px;
+                top: 45px;
                 right: 0;
-                background-color: white;
-                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-                border-radius: 10px;
+                background: rgba(255, 255, 255, 0.85);
+                backdrop-filter: blur(10px);
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+                border-radius: 14px;
                 display: flex;
                 flex-direction: column;
-                padding: 12px;
+                padding: 10px 14px;
                 z-index: 1000;
-                min-width: 160px;
+                min-width: 180px;
+                animation: dropdownFadeIn 0.3s ease forwards;
 
                 .triangle {
                     content: '';
                     position: absolute;
                     top: -10px;
-                    right: 12px;
+                    right: 16px;
                     width: 0;
                     height: 0;
                     border-left: 8px solid transparent;
                     border-right: 8px solid transparent;
-                    border-bottom: 10px solid white;
+                    border-bottom: 10px solid rgba(255, 255, 255, 0.85);
+                }
+
+                .dropdown-user {
+                    font-weight: bold;
+                    color: #1b4f3a;
+                    margin-bottom: 6px;
+                    padding-left: 4px;
                 }
 
                 .dropdown-link {
                     text-decoration: none;
                     color: #2d7a5f;
                     font-weight: 500;
-                    padding: 8px;
-                    border-radius: 6px;
-                    transition: background 0.3s;
+                    padding: 8px 10px;
+                    border-radius: 8px;
+                    margin: 2px 0;
+                    display: flex;
+                    align-items: center;
+                    gap: 8px;
+                    transition: background 0.3s, transform 0.2s;
 
                     &:hover {
-                        background-color: #f0f0f0;
+                        background-color: #e7f5f0;
+                        transform: translateX(4px);
+                    }
+
+                    &.logout {
+                        color: #c0392b;
+
+                        &:hover {
+                            background-color: #fdecea;
+                        }
                     }
                 }
             }
         }
+    }
+}
+
+@keyframes dropdownFadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0px);
     }
 }

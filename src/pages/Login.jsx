@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../styles/pages_styles/Login.scss';
 
-function Login() {
+function Login({ setUserData }) {
     const [mode, setMode] = useState('login');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -37,13 +37,17 @@ function Login() {
                 localStorage.setItem('token', res.data.access);
                 setMessage('Giriş uğurlu! Əvvəlki səhifəyə qayıdın ✅');
 
-                // Yeni: Ana sekme kapalı mı kontrolü
+                const userRes = await axios.get('http://localhost:8000/api/auth/me/', {
+                    headers: {
+                        Authorization: `Bearer ${res.data.access}`,
+                    },
+                });
+                setUserData(userRes.data);
+
                 if (!window.opener || window.opener.closed) {
-                    // Ana sekme kapalıysa yeni sekme aç
                     window.open("http://localhost:5173", "_blank");
                 }
 
-                // 2 saniye sonra popup'u kapat
                 setTimeout(() => window.close(), 2000);
 
             } else {
@@ -68,7 +72,6 @@ function Login() {
             console.error("❌ Register/Login API ERROR:", err);
         }
     };
-
 
     return (
         <div className="login-container">
