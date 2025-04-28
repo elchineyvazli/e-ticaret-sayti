@@ -30,6 +30,10 @@ nav {
         .total_basket {
             position: relative;
 
+            .basket-link{
+                text-decoration: none;
+            }
+
             .count {
                 position: absolute;
                 top: -6px;

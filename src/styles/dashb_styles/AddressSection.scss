@@ -1,0 +1,87 @@
+.address-section-container {
+    width: 100%;
+    background: #ffffff;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08);
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    font-family: 'Poppins', sans-serif;
+}
+
+.address-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h2 {
+        font-size: 1.6rem;
+        color: #2d7a5f;
+        font-weight: 600;
+    }
+
+    .badge {
+        background: #e0f7f1;
+        color: #2d7a5f;
+        padding: 0.4rem 0.8rem;
+        border-radius: 12px;
+        font-size: 0.8rem;
+        font-weight: 500;
+    }
+}
+
+.info-text {
+    font-size: 0.9rem;
+    color: #666;
+    background: #f8f9fb;
+    padding: 1rem;
+    border-radius: 12px;
+}
+
+.address-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+
+        label {
+            font-size: 0.95rem;
+            color: #555;
+            font-weight: 500;
+        }
+
+        input {
+            padding: 0.7rem 1rem;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            font-size: 1rem;
+            outline: none;
+            transition: border 0.3s ease;
+
+            &:focus {
+                border-color: #2d7a5f;
+            }
+        }
+    }
+
+    .save-button {
+        background: #2d7a5f;
+        color: white;
+        padding: 0.8rem 1.2rem;
+        border: none;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.3s ease;
+
+        &:hover {
+            background: #246b51;
+        }
+    }
+}

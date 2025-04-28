@@ -82,7 +82,6 @@ function Navbar({ userData, setUserData }) {
                   <>
                     <Link
                       to="/login"
-                      target="_blank"
                       className="dropdown-link"
                       onClick={() => localStorage.setItem("auth_mode", "login")}
                     >
@@ -90,7 +89,6 @@ function Navbar({ userData, setUserData }) {
                     </Link>
                     <Link
                       to="/login"
-                      target="_blank"
                       className="dropdown-link"
                       onClick={() => localStorage.setItem("auth_mode", "register")}
                     >
