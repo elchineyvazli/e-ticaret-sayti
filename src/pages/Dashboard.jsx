@@ -6,7 +6,7 @@ import '../styles/pages_styles/Dashboard.scss';
 import ProfileSection from '../components/dashboard/ProfileSection';
 import PhoneSection from '../components/dashboard/PhoneSection';
 import PasswordSection from '../components/dashboard/PasswordSection';
-import OrdersSection from '../components/dashboard/OrdersSection';
+import OrdersSection from '../components/dashboard/OrderSection';
 import AddressSection from '../components/dashboard/AddressSection';
 
 function Dashboard() {

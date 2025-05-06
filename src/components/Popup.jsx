@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import StepMetroSelectV2 from './steps/StepMetroSelectV2';
 import StepAgreement from './steps/StepAgreement';
 import StepGuide from './steps/StepGuide';
@@ -10,6 +11,11 @@ const Popup = ({ closePopup, openAgreementModal, initialStep = 1 }) => {
     const [step, setStep] = useState(initialStep);
     const [isTransitioning, setIsTransitioning] = useState(false);
 
+    const products_in_basket = useSelector(store => store.productSlice.products_in_basket);
+
+    useEffect(() => {
+        localStorage.setItem("selectedBasket", JSON.stringify(products_in_basket));
+    }, [])
     const goNext = () => {
         if (isTransitioning) return;
         setIsTransitioning(true);

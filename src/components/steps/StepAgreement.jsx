@@ -20,6 +20,12 @@ const StepAgreement = ({ next, back, openAgreementModal }) => {
             return;
         }
         setShowError(false);
+        axios.patch("http://localhost:8000/api/users/popup/", {
+            popup: { step: 2, metro: selectedMetroId }
+        }, {
+            headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+        });
+
         next();
     };
 

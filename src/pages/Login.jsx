@@ -30,49 +30,42 @@ function Login({ setUserData }) {
 
         try {
             if (mode === 'login') {
-                const res = await axios.post('http://localhost:8000/api/auth/login/', {
-                    username,
-                    password,
-                });
-                localStorage.setItem('token', res.data.access);
-                setMessage('Giriş uğurlu! Əvvəlki səhifəyə qayıdın ✅');
-
-                const userRes = await axios.get('http://localhost:8000/api/auth/me/', {
-                    headers: {
-                        Authorization: `Bearer ${res.data.access}`,
-                    },
-                });
-                setUserData(userRes.data);
-
-                if (!window.opener || window.opener.closed) {
-                    window.open("http://localhost:5173", "_blank");
-                }
-
-                setTimeout(() => window.close(), 2000);
-
             } else {
                 if (password !== confirmPassword) {
                     setError("Şifrələr uyğun deyil.");
                     return;
-                } else {
-                    const res = await axios.post('http://localhost:8000/api/auth/register/', {
-                        username,
-                        phone_number: phone,
-                        password,
-                    });
-                    setMessage('Qeydiyyat uğurlu! WhatsApp nömrənizə kod göndərildi ✅');
+                }
+
+                const cleanPhone = phone.replace(/\D/g, '');
+                if (cleanPhone.length !== 9) {
+                    setError("Telefon nömrəsi 10 rəqəmli olmalıdır");
+                    return;
+                }
+
+                const res = await axios.post('http://localhost:8000/api/auth/register/', {
+                    username,
+                    phone_number: `994${cleanPhone}`,
+                    password,
+                    confirm_password: confirmPassword
+                });
+
+                if (res.status === 201) {
+                    setMessage(res.data.msg);
                 }
             }
         } catch (err) {
-            if (err.response?.data) {
-                setError(Object.values(err.response.data).flat().join(" | "));
+            if (err.response) {
+                if (err.response.data) {
+                    setError(err.response.data.msg ||
+                        err.response.data.detail ||
+                        "Xəta baş verdi. Zəhmət olmasa yenidən cəhd edin.");
+                }
             } else {
-                setError("Xəta baş verdi. Məlumatları yoxlayın.");
+                setError("Şəbəkə xətası. İnternet bağlantınızı yoxlayın.");
             }
-            console.error("❌ Register/Login API ERROR:", err);
+            console.error("Registration error:", err);
         }
     };
-
     return (
         <div className="login-container">
             <div className="switcher">
@@ -98,20 +91,20 @@ function Login({ setUserData }) {
                         <span className="phone-prefix">🇦🇿 +994</span>
                         <input
                             type="tel"
-                            placeholder="___-___-__-__"
+                            placeholder="__-___-__-__"
                             value={phone}
                             onChange={(e) => {
-                                let digits = e.target.value.replace(/\D/g, '').slice(0, 10);
+                                let digits = e.target.value.replace(/\D/g, '').slice(0, 9);
                                 let formatted = '';
-                                if (digits.length > 0) formatted += digits.slice(0, 3);
-                                if (digits.length >= 4) formatted += '-' + digits.slice(3, 6);
-                                if (digits.length >= 7) formatted += '-' + digits.slice(6, 8);
-                                if (digits.length >= 9) formatted += '-' + digits.slice(8, 10);
+                                if (digits.length > 0) formatted += digits.slice(0, 2);
+                                if (digits.length >= 3) formatted += '-' + digits.slice(2, 5);
+                                if (digits.length >= 6) formatted += '-' + digits.slice(5, 7);
+                                if (digits.length >= 8) formatted += '-' + digits.slice(7, 9);
                                 setPhone(formatted);
 
                                 const prefix = digits.slice(0, 3);
-                                const validPrefixes = ['050', '051', '010', '055', '099', '070', '077', '060'];
-                                if (prefix.length === 3 && !validPrefixes.includes(prefix)) {
+                                const validPrefixes = ['50', '51', '10', '55', '99', '70', '77', '60'];
+                                if (prefix.length === 2 && !validPrefixes.includes(prefix)) {
                                     setError("Prefiks yanlışdır. Zəhmət olmasa düzgün operator kodu daxil edin.");
                                 } else {
                                     setError("");

@@ -1,6 +1,7 @@
 import React, { useRef, useState } from 'react';
 import metros from '../../data/metros';
 import '../../styles/steps_styles/StepMetroSelectV2.scss';
+import axios from 'axios';
 
 const StepMetroSelectV2 = ({ next }) => {
     const [selected, setSelected] = useState(null);
@@ -11,8 +12,20 @@ const StepMetroSelectV2 = ({ next }) => {
 
     const handleSelect = (id) => {
         setSelected(id);
-        localStorage.setItem("selectedMetro", id);
-        next();
+        axios.patch("http://localhost:8000/api/users/popup/", {
+            popup: { step: 2, metro: id }
+        }, {
+            headers: {
+                Authorization: `Bearer ${localStorage.getItem("token")}`
+            }
+        })
+            .then(() => {
+                console.log("✅ Metro backend'e kaydedildi.");
+                next();
+            })
+            .catch((err) => {
+                console.error("❌ Metro backend'e kaydedilemedi:", err);
+            });
     };
 
     const handleMouseDown = (e) => {

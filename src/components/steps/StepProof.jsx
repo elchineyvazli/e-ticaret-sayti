@@ -24,10 +24,30 @@ const StepProof = ({ next, back }) => {
         setTimeout(() => {
             setSubmitted(true);
             setTimeout(() => {
+                axios.patch("http://localhost:8000/api/users/popup/", {
+                    popup: { step: 2, metro: selectedMetroId }
+                }, {
+                    headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+                });
                 next();
             }, 1500);
         }, 1000);
     };
+
+    const verifyScreenshot = (file) => {
+        const allowedTypes = ['image/jpeg', 'image/png'];
+        if (!allowedTypes.includes(file.type)) {
+            alert("Sadece JPG/PNG dosyaları kabul edilir!");
+            return false;
+        }
+        if (file.size > 2 * 1024 * 1024) {
+            alert("Dosya boyutu 2MB'ı geçemez!");
+            return false;
+        }
+        return true;
+    };
+    
+    if (!verifyScreenshot(e.target.files[0])) return;
 
     return (
         <div className="proof-container">

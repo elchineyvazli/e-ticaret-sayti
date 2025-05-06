@@ -27,6 +27,11 @@ const StepGuide = ({ next, back }) => {
         if (currentStep < steps.length - 1) {
             setCurrentStep(prev => prev + 1);
         } else {
+            axios.patch("http://localhost:8000/api/users/popup/", {
+                popup: { step: 2, metro: selectedMetroId }
+            }, {
+                headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }
+            });
             next();
         }
     };

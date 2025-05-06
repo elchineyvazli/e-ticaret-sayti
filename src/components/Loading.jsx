@@ -1,17 +1,17 @@
-import Backdrop from '@mui/material/Backdrop';
-import CircularProgress from '@mui/material/CircularProgress';
-import { useSelector } from 'react-redux';
+// src/components/Loading.jsx
+import React from 'react';
+import '../styles/comp_styles/Loading.scss';
 
-function Loading() {
-    const loading = useSelector(store => store.appSlice.loading)
+const Loading = () => {
     return (
-        <Backdrop
-            sx={(theme) => ({ color: '#fff', zIndex: theme.zIndex.drawer + 1 })}
-            open={loading}
-        >
-            <CircularProgress color="inherit" />
-        </Backdrop>
+        <div className="loading-overlay">
+            <div className="bouncing-dots">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
     );
-}
+};
 
-export default Loading
+export default Loading;

@@ -9,6 +9,7 @@ const initialState = {
 }
 
 const BASE_URL = "http://localhost:8000"
+const normalizeId = (val) => String(val).trim().toLowerCase();
 
 export const getAllProducts = createAsyncThunk("getAllProducts", async () => {
     const response = await fetch(`${BASE_URL}/api/products/`)
@@ -19,7 +20,6 @@ export const getAllProducts = createAsyncThunk("getAllProducts", async () => {
 const calculateTotalPrice = (products) =>
     products.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-// 🔧 return eksikti
 const recalculateProductQuantity = (products) =>
     products.reduce((sum, item) => sum + item.quantity, 0);
 
@@ -31,17 +31,15 @@ export const appSlice = createSlice({
             const id = action.payload[0];
             const amountToAdd = action.payload[1];
 
-            const productIndex = state.products.findIndex(p => p.id === id);
+            const productIndex = state.products.findIndex(p => normalizeId(p.id) === normalizeId(id));
             if (productIndex === -1) return;
 
             const product = state.products[productIndex];
             const total_quantity = product.total_quantity;
 
-            // Sepette varsa, önceki miktarı al
-            const existingItem = state.products_in_basket.find(item => item.id === id);
+            const existingItem = state.products_in_basket.find(item => normalizeId(item.id) === normalizeId(id));
             const existingQuantity = existingItem?.quantity || 0;
 
-            // 🔐 Yeni toplam miktarı hesapla
             const newTotalQuantity = existingQuantity + amountToAdd;
 
             if (newTotalQuantity > total_quantity) {
@@ -59,7 +57,7 @@ export const appSlice = createSlice({
             state.products[productIndex] = updatedProduct;
 
             // 🔁 Sepette varsa üzerine ekle, yoksa yeni ekle
-            const basketIndex = state.products_in_basket.findIndex(item => item.id === id);
+            const basketIndex = state.products_in_basket.findIndex(item => normalizeId(item.id) === normalizeId(id));
             if (basketIndex === -1) {
                 state.products_in_basket.push({ ...updatedProduct });
             } else {
@@ -73,12 +71,12 @@ export const appSlice = createSlice({
 
 
         increaseQuantityProd: (state, action) => {
-            const prodInBasket = state.products_in_basket.find(prod => prod.id === action.payload);
+            const prodInBasket = state.products_in_basket.find(prod => normalizeId(prod.id) === normalizeId(action.payload));
             if (prodInBasket && prodInBasket.quantity < 10) {
                 prodInBasket.quantity += 1;
             }
 
-            const prodInProducts = state.products.find(prod => prod.id === action.payload);
+            const prodInProducts = state.products.find(prod => normalizeId(prod.id) === normalizeId(action.payload));
             if (prodInProducts && prodInProducts.quantity < 10) {
                 prodInProducts.quantity += 1;
             }
@@ -88,12 +86,12 @@ export const appSlice = createSlice({
         },
 
         creaseQuantityProd: (state, action) => {
-            const prodInBasket = state.products_in_basket.find(prod => prod.id === action.payload);
+            const prodInBasket = state.products_in_basket.find(prod => normalizeId(prod.id) === normalizeId(action.payload));
             if (prodInBasket && prodInBasket.quantity > 1) {
                 prodInBasket.quantity -= 1;
             }
 
-            const prodInProducts = state.products.find(prod => prod.id === action.payload);
+            const prodInProducts = state.products.find(prod => normalizeId(prod.id) === normalizeId(action.payload));
             if (prodInProducts && prodInProducts.quantity > 1) {
                 prodInProducts.quantity -= 1;
             }
@@ -109,7 +107,7 @@ export const appSlice = createSlice({
         },
 
         removeFromBasket: (state, action) => {
-            state.products_in_basket = state.products_in_basket.filter(item => item.id !== action.payload);
+            state.products_in_basket = state.products_in_basket.filter(item => normalizeId(item.id) !== normalizeId(action.payload));
             state.total_price = calculateTotalPrice(state.products_in_basket);
             state.productQuantity = recalculateProductQuantity(state.products_in_basket); // 🔧 sabitlendi
         }

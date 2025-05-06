@@ -14,48 +14,46 @@ import axios from "axios";
 import Dashboard from "./pages/Dashboard";
 
 function App() {
+  const [isAppLoading, setIsAppLoading] = useState(true);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [agreementModalOpen, setAgreementModalOpen] = useState(false);
   const [onAgreementAccepted, setOnAgreementAccepted] = useState(null);
   const [userData, setUserData] = useState(null);
 
-
   useEffect(() => {
-    const shouldOpen = localStorage.getItem("shouldReopenPopup");
-    const step = localStorage.getItem("reopenStep");
     const token = localStorage.getItem("token");
 
-    if (token && token !== "undefined" && token !== "null") {
+    if (token && token !== "undefined") {
       axios.get("http://localhost:8000/api/auth/me/", {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
+        headers: { Authorization: `Bearer ${token}` }
       })
-        .then(res => setUserData(res.data))
-        .catch((err) => {
-          console.error("Giriş yoxdu və ya token səhvdi ❌", err);
+        .then(res => {
+          setUserData(res.data);
+
+          if (res.data.popup && res.data.popup.step) {
+            setIsPopupOpen(true);
+            setTimeout(() => {
+              window.dispatchEvent(new CustomEvent("resumeStep", {
+                detail: { step: res.data.popup.step }
+              }));
+            }, 500);
+          }
+        })
+        .catch(() => {
           localStorage.removeItem("token");
           setUserData(null);
+        })
+        .finally(() => {
+          setIsAppLoading(false);
         });
-    }
-
-    if (shouldOpen === "true") {
-      setIsPopupOpen(true);
-      localStorage.removeItem("shouldReopenPopup");
-
-      if (step) {
-        setTimeout(() => {
-          window.dispatchEvent(
-            new CustomEvent("resumeStep", {
-              detail: { step: parseInt(step) }
-            })
-          );
-          localStorage.removeItem("reopenStep");
-        }, 500);
-      }
+    } else {
+      setIsAppLoading(false);
     }
   }, []);
 
+  if (isAppLoading) {
+    return <Loading />;
+  }
 
   const openPopup = () => {
     setIsPopupOpen(true);
@@ -85,15 +83,18 @@ function App() {
           <Route path="/elaqe" element={<Contact />} />
           <Route path="/product_basket" element={<BasketProducts openPopup={openPopup} />} />
           <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="*" element={<NothingPage />} />
           <Route path="/login" element={<Login setUserData={setUserData} />} />
+          <Route path="*" element={<NothingPage />} />
         </Routes>
       </main>
 
       {isPopupOpen && (
         <Popup
-          closePopup={closePopup}
-          openAgreementModal={openAgreementModal}
+          closePopup={() => setIsPopupOpen(false)}
+          openAgreementModal={(cb) => {
+            setOnAgreementAccepted(() => cb);
+            setAgreementModalOpen(true);
+          }}
           initialStep={parseInt(localStorage.getItem('reopenStep')) || 1}
         />
       )}
@@ -101,10 +102,11 @@ function App() {
       <AgreementModal
         isOpen={agreementModalOpen}
         onClose={() => setAgreementModalOpen(false)}
-        onAccept={handleAgreementAccept}
+        onAccept={() => {
+          if (onAgreementAccepted) onAgreementAccepted();
+          setAgreementModalOpen(false);
+        }}
       />
-
-      <Loading />
     </>
   );
 }

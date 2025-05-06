@@ -136,3 +136,61 @@
     color: #c0392b;
     font-weight: 600;
 }
+
+.price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #2d7a5f;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    .old-price {
+        text-decoration: line-through;
+        color: #888;
+        font-size: 1rem;
+    }
+
+    .discounted {
+        color: #d63031;
+        font-size: 1.2rem;
+        font-weight: 700;
+    }
+}
+
+.product-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 8px;
+
+    .tag {
+        background: #f1f1f1;
+        border-radius: 12px;
+        padding: 4px 10px;
+        font-size: 0.75rem;
+        color: #333;
+    }
+
+    .badge {
+        background-color: #2d7a5f;
+        color: white;
+    }
+
+    .featured {
+        background-color: #e67e22;
+    }
+
+    .stokda {
+        background-color: #2ecc71;
+    }
+
+    .bitib {
+        background-color: #e74c3c;
+    }
+
+    .az-qalıb {
+        background-color: #f1c40f;
+        color: black;
+    }
+}

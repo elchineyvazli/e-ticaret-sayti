@@ -1,15 +1,27 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { FaShoppingBag } from 'react-icons/fa';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 import '../../styles/dashb_styles/OrderSection.scss';
 
-const orders = [
-    { id: 1, title: "Gümüş Üzük", date: "12/04/2025", price: "45 AZN" },
-    { id: 2, title: "Təbii Daşlı Boyunbağı", date: "20/04/2025", price: "75 AZN" },
-    { id: 3, title: "Klassik Qolbaq", date: "21/04/2025", price: "60 AZN" },
-];
-
 function OrderSection() {
+    const [orders, setOrders] = useState([]);
+    useEffect(() => {
+        const token = localStorage.getItem("token");
+        if (!token) return;
+
+        axios.get("http://localhost:8000/api/my-orders/", {
+            headers: { Authorization: `Bearer ${token}` }
+        })
+            .then(res => {
+                setOrders(res.data);
+            })
+            .catch(err => {
+                console.error("Sipariş verisi alınamadı ❌", err);
+            });
+    }, []);
+
     return (
         <motion.div
             className="orders-container"
@@ -31,14 +43,21 @@ function OrderSection() {
                             whileHover={{ scale: 1.03 }}
                             whileTap={{ scale: 0.97 }}
                         >
-                            <h3>{order.title}</h3>
-                            <p>Tarix: {order.date}</p>
-                            <p>Qiymət: {order.price}</p>
+                            <h3>🛍️ Məhsul ID: {order.product_id}</h3>
+                            <p>Tarix: {new Date(order.created_at).toLocaleDateString()}</p>
+                            <p>Metro: {order.selected_metro}</p>
+                            <p>Ödəniş: {order.payment_method}</p>
+                            <p>Say: {order.quantity}</p>
+                            <p>Ümumi: ₼{order.total_price}</p>
+                            <p className={`badge ${order.is_complete ? 'success' : 'pending'}`}>
+                                {order.is_complete ? "Tamamlandı ✅" : "Gözləyir ⏳"}
+                            </p>
                         </motion.div>
                     ))
                 ) : (
                     <p>😕 Hələ sifariş yoxdur.</p>
                 )}
+
             </div>
         </motion.div>
     );

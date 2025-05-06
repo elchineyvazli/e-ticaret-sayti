@@ -3,13 +3,15 @@ import { removeFromBasket } from '../slices/productSlice';
 import BasketCard from '../components/BasketCard';
 import '../styles/pages_styles/BasketProducts.scss';
 
+const normalizeId = (val) => String(val).trim().toLowerCase();
+
 function BasketProducts({ openPopup }) {
     const dispatch = useDispatch();
     const products_in_basket = useSelector(store => store.productSlice.products_in_basket);
     const total_price = useSelector(store => store.productSlice.total_price);
 
     const handleRemove = (id) => {
-        dispatch(removeFromBasket(id));
+        dispatch(removeFromBasket(normalizeId(id)));
     };
 
     return (
@@ -33,7 +35,7 @@ function BasketProducts({ openPopup }) {
                             quality={product.quality}
                             total_quantity={product.total_quantity}
                             gallery={product.gallery}
-                            onRemove={() => handleRemove(product.id)}
+                            onRemove={() => handleRemove(normalizeId(product.id))}
                         />
                     ))
                 ) : (
